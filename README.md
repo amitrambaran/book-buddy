@@ -40,8 +40,8 @@ Section with the NY-Times Best Sellers in Fiction/Non-Fiction.
 
 ## Framework considerations
 Frontend: 
-*React
-*Semantic UI
+* React
+* Semantic UI
 
 ## Backend
 REST API: 
