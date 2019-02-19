@@ -45,8 +45,8 @@ Frontend:
 
 ## Backend
 REST API: 
-*GO
-*Node
+* GO
+* Node
 
 Web Hosting: Heroku, Digital Ocean servlet
 # Sources and References
