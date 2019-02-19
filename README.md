@@ -40,11 +40,13 @@ Section with the NY-Times Best Sellers in Fiction/Non-Fiction.
 
 ## Framework considerations
 Frontend: 
-React
-Semantic UI
+*React
+*Semantic UI
 
 ## Backend
-REST API : GO, Node
+REST API: 
+*GO
+*Node
 
 Web Hosting: Heroku, Digital Ocean servlet
 # Sources and References
