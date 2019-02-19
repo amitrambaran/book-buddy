@@ -48,7 +48,11 @@ REST API:
 * GO
 * Node
 
-Web Hosting: Heroku, Digital Ocean servlet
+Web Hosting: 
+
+* Heroku
+* Digital Ocean servlet
+
 # Sources and References
 https://openlibrary.org/developers/api
 https://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_LookupbyISBN.html
