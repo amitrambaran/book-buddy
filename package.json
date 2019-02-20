@@ -1,0 +1,22 @@
+{
+  "name": "book-buddy",
+  "version": "1.0.0",
+  "description": "The only book app you will ever need!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amitrambaran/book-buddy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amitrambaran/book-buddy/issues"
+  },
+  "homepage": "https://github.com/amitrambaran/book-buddy#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
