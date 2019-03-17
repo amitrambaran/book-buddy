@@ -42,6 +42,7 @@ Section with the NY-Times Best Sellers in Fiction/Non-Fiction.
 Frontend: 
 * React
 * Semantic UI
+* React-Bootstrap: https://react-bootstrap.github.io/components/alerts/
 
 ## Backend
 REST API: 
