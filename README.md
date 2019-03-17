@@ -48,10 +48,18 @@ REST API:
 * GO
 * Node
 
-Web Hosting: 
-
+## Web Hosting
 * Heroku
 * Digital Ocean servlet
+
+# How to Start Developing
+## Installation Requirements
+* NodeJS
+
+1. Clone this repo
+2. npm install
+3. npm run build
+4. npm run start
 
 # Sources and References
 https://openlibrary.org/developers/api
