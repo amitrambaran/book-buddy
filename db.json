@@ -5,21 +5,25 @@
             "title": "The Brothers Karamazov",
             "author": "Theodore Dostoevsky",
             "cover": "https://media1.popsugar-assets.com/files/thumbor/1RZgraw7QVcWY3lPkJfy6RI9sOU/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2012/11/46/2/301/3019466/888c4748aa72fd03_683586_3597231_lz/i/Brothers-Karamazov.jpg",
-            "rating": 5
+            "rating": 4.32,
+            "description": "The Brothers Karamasov is a murder mystery, a courtroom drama, and an exploration of erotic rivalry in a series of triangular love affairs involving the “wicked and sentimental” Fyodor Pavlovich Karamazov and his three sons―the impulsive and sensual Dmitri; the coldly rational Ivan; and the healthy, red-cheeked young novice Alyosha. Through the gripping events of their story, Dostoevsky portrays the whole of Russian life, is social and spiritual striving, in what was both the golden age and a tragic turning point in Russian culture."
+            
         },
         {
             "id": 2,
             "title": "Thus Spoke Zarathustra",
             "author": "Friedrich Nietzsche",
             "cover": "https://images-na.ssl-images-amazon.com/images/I/51vp6JxnI3L._SX331_BO1,204,203,200_.jpg",
-            "rating": 5
+            "rating": 4.06,
+            "description": "Friedrich Nietzsche's most accessible and influential philosophical work, misquoted, misrepresented, brilliantly original and enormously influential, Thus Spoke Zarathustra is translated from the German by R.J. Hollingdale in Penguin Classics."
         },
         {
             "id": 3,
             "title": "Meditations",
             "author": "Marcus Aurelius",
             "cover": "https://images-na.ssl-images-amazon.com/images/I/51cQEdN9KuL._SX331_BO1,204,203,200_.jpg",
-            "rating": 5
+            "rating": 4.23,
+            "description": "Written in Greek, without any intention of publication, by the only Roman emperor who was also a philosopher, the Meditations of Marcus Aurelius (AD 121-180) offer a remarkable series of challenging spiritual reflections and exercises developed as the emperor struggled to understand himself and make sense of the universe."
         }
     ]
 }
