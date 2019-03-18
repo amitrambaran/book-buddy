@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Navbar, Nav, Form, FormControl } from 'react-bootstrap'
 
+// Navigation Bar Component
 export default class navBar extends Component {
   render() {
     return (
