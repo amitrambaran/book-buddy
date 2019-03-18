@@ -5,17 +5,8 @@ export default class book extends Component {
     id: ''
   }
 
-  constructor(props) {
-    super(props);
-    this.handleLoad = this.handleLoad.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('load', this.handleLoad);
-  }
-
   // Get API information here...
-  handleLoad() {
+  componentDidMount() {
     var id = window.location.pathname.split('/')[2]
     this.setState({ id: id })
   }
