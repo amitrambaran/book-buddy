@@ -1,7 +1,10 @@
 /* THIS IS THE MAIN TEMPLATE */
 
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import './App.css';
+
+import About from './components/pages/about'
 
 import Bookshelf from './components/bookshelf/bookshelf'
 
@@ -35,13 +38,26 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>UNDER DEVELOPMENT</h1>
+      <Router>
+        <div className="App">
+          <h1>Book Buddy</h1>
+          <br/>
 
-        <br/>
+          {/* Route for Homepage */}
+          <Route exact path="/" render={ props => (
+            <React.Fragment>
+              <Bookshelf books={ this.state.books } />
+            </React.Fragment>
+          )}/>
 
-        <Bookshelf books={ this.state.books } />
-      </div>
+          {/* Route for About page */}
+          <Route path="/about" render={ props => (
+            <React.Fragment>
+              <About />
+            </React.Fragment>
+          )}/>
+        </div>
+      </Router>
     );
   }
 }
