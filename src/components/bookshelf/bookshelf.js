@@ -1,12 +1,10 @@
-import React, { Component } from 'react'
-import BookItem from './bookItem'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import BookItem from './bookItem';
 import './bookshelf.css';
 
 // Bookshelf Component
 // Displays in a grid/tile view a collection of books.
-//
-// Props
-// books: collections of books (JSON).
 export class bookshelf extends Component {
   render() {
     // Map: for each item "book" in "books", run the following:
@@ -14,6 +12,12 @@ export class bookshelf extends Component {
         <BookItem key={ book.id } book={ book } />
     ));
   }
+}
+
+// Props (Values passed to component)
+// books: collections of books (JSON).
+bookshelf.propTypes = {
+    books: PropTypes.array.isRequired
 }
 
 export default bookshelf

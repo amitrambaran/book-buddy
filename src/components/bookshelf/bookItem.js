@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './bookshelf.css';
 
 // BookItem Component
 // Displays singular book item on the bookshelf.
-//
-// Props
-// book: book to by displayed (JSON slice).
 export class bookItem extends Component {
   render() {
     return (
@@ -20,5 +18,12 @@ export class bookItem extends Component {
     )
   }
 }
+
+// Props (Values passed to component)
+// book: book to by displayed (JSON slice).
+bookItem.propTypes = {
+    book: PropTypes.object.isRequired
+}
+
 
 export default bookItem
