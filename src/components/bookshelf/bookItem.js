@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './bookshelf.css';
 
 // BookItem Component
 // Displays singular book item on the bookshelf.

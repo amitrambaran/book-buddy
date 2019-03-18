@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import BookItem from './bookItem'
+import './bookshelf.css';
 
 // Bookshelf Component
 // Displays in a grid/tile view a collection of books.
