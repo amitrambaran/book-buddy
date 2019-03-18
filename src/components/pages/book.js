@@ -3,16 +3,15 @@ import Axios from 'axios';
 
 export default class book extends Component {
   state = {
-    id: '',
     book: []
   }
 
   // Triggers on component mount.
   componentDidMount() {
+    // Get URL id information.
     var id = window.location.pathname.split('/')[2]
-    this.setState({ id: id })
 
-    // Get API information here...
+    // API call.
     var URL = 'http://my-json-server.typicode.com/amitrambaran/book-buddy/books/' + id
     console.log(URL)
     Axios.get(URL).then(res =>
