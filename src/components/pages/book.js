@@ -25,7 +25,7 @@ export default class book extends Component {
         <h1>Book Information</h1>
         <p>Page shows a given book's title, author, rating, desc, where to buy, etc..</p>
         <br/>
-        <p>Book ID: { this.state.id }</p>
+        <p>Book ID: { this.state.book.id }</p>
         <p>Title: { this.state.book.title }</p>
         <p>Author: { this.state.book.author }</p>
         <p>Rating: { this.state.book.rating }</p>
