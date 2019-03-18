@@ -7,6 +7,7 @@ import Bookshelf from './components/bookshelf/bookshelf'
 
 class App extends Component {
   state = {
+    // Hardcoded data, JSON attributes TBD.
     books: [
       {
         id: 1,

@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
 
+// BookItem Component
+// Displays singular book item on the bookshelf.
+//
+// Props
+// book: book to by displayed (JSON slice).
 export class bookItem extends Component {
   render() {
     return (
