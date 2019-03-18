@@ -1,14 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Axios from 'axios';
 
 export default class book extends Component {
   state = {
     id: ''
   }
 
-  // Get API information here...
+  // Triggers on component mount.
   componentDidMount() {
     var id = window.location.pathname.split('/')[2]
     this.setState({ id: id })
+    
+    // Get API information here...
+    Axios.get('https://jsonplaceholder.typicode.com/todos').then(res =>
+      console.log(res.data)
+    )
   }
 
   render() {
