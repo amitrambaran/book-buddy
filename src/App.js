@@ -14,6 +14,9 @@ import Recommend from './components/pages/recommend';
 import Saved from './components/pages/saved';
 import Upload from './components/pages/upload';
 
+/* Components */
+import Navbar from './components/navBar/navBar';
+
 class App extends Component {
   state = {
     // Hardcoded dummy data, JSON attributes TBD.
@@ -46,6 +49,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <Navbar/>
+
+          <br/>
           <h1>Book Buddy</h1>
           <br/>
 
