@@ -31,20 +31,7 @@ function httpRequest(url) {
     httpReq.onload = function () {
         if (httpReq.status == 200 && httpReq.readyState == 4) {
             console.log("Status OK");
-            results.innerHTML = "";
-            let bookData = JSON.parse(httpReq.responseText);
-            console.log(bookData);
-            bookData.docs.forEach(function (book) {
-                let coverURL = '';
-                if (book.isbn === undefined) {
-                    console.log("no isbn!");
-                    return;
-                }
-                coverURL = "https://covers.openlibrary.org/b/isbn/" + book.isbn[0] + "-L.jpg";
-                console.log(coverURL);
-                results.innerHTML = results.innerHTML + book.title_suggest + " by " + book.author_name + "<br>" +
-                    "<img src=" + coverURL + "></img><br>";
-            });
+            bookSearch(httpReq);
 
         }
         else {
@@ -55,4 +42,38 @@ function httpRequest(url) {
     }
     httpReq.open("GET", url);
     httpReq.send();
+}
+
+function recommendedBooks(titleArray) {
+
+    let recommendedJSONArray = [];
+    titleArray.forEach(function (url) {
+        let query = 'https://openlibrary.org/search.json?q=' + url;
+        let httpRecommendReq = new XMLHttpRequest();
+        httpRecommendReq.onload = function () {
+            recommendedJSONArray.push(JSON.parse(httpRecommendReq.responseText));
+        }
+        httpRecommendReq.open("GET", query);
+        httpRecommendReq.send();
+    });
+
+    return recommendedJSONArray;
+}
+
+function bookSearch(httpReq) {
+    results.innerHTML = "";
+    let bookData = JSON.parse(httpReq.responseText);
+    console.log(bookData);
+    bookData.docs.forEach(function (book) {
+        let coverURL = '';
+        if (book.isbn === undefined) {
+            console.log("no isbn!");
+            return;
+        }
+        coverURL = "https://covers.openlibrary.org/b/isbn/" + book.isbn[0] + "-L.jpg";
+        console.log(coverURL);
+        results.innerHTML = results.innerHTML + book.title_suggest + " by " + book.author_name + "<br>" +
+            "<img src=" + coverURL + "></img><br>";
+    });
+
 }
