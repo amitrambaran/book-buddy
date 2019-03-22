@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/amitrambaran/book-buddy/issues"
   },
-  "homepage": "https://github.com/amitrambaran/book-buddy#readme",
+  "homepage": "",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
