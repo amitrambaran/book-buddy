@@ -61,8 +61,7 @@ func main() {
 		api.POST("/like/:id", LikeBookHandler)
 		api.POST("/dislike/:id", DislikeBookHandler)
 		api.GET("/username/:id", GetUserNameHandler)
-		api.POST("/login", LoginHandler)
-		api.POST("/register", RegisterHandler)
+		api.POST("/login", LoginRegisterHandler)
 	}
 
 	router.Run(":8080")
@@ -88,19 +87,20 @@ type User struct {
 
 type Book struct {
 	ISBN  string `json:"ISBN" binding:"required" gorm:"unique_index"`
-	Title string `json:"title"`
+	Title string `json:"title" binding:"required"`
+	Details string `json:"details" binding:"required"`
 }
 
 func GetUserNameHandler(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(400, "Invalid user id")
+		c.JSON(400, gin.H{"message":"Invalid user id"})
 		return
 	}
 	user := new(User)
 	db.Where("id=?", id).Find(&user)
 	if user.ID == 0 {
-		c.JSON(404, "Invalid user")
+		c.JSON(404, gin.H{"message":"Invalid user"})
 		return
 	}
 	c.JSON(200, gin.H{"username": user.Username})
@@ -110,19 +110,19 @@ func DislikeBookHandler(c *gin.Context) {
 	var err error
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(400, "Invalid user id")
+		c.JSON(400, gin.H{"message":"Invalid user id"})
 		return
 	}
 	form := new(BookForm)
 	err = c.BindJSON(form)
 	if err != nil {
-		c.JSON(400, "Invalid user book form")
+		c.JSON(400, gin.H{"message":"Invalid user book form"})
 		return
 	}
 	user := new(User)
 	db.Where("id=?", id).Find(&user)
 	if user.ID == 0 {
-		c.JSON(404, "Invalid user")
+		c.JSON(404, gin.H{"message":"Invalid user"})
 		return
 	}
 	db.Model(&user).Association("Disikes").Append(&Book{ISBN: form.ISBN, Title: form.Title})
@@ -133,55 +133,37 @@ func LikeBookHandler(c *gin.Context) {
 	var err error
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(400, "Invalid user id")
+		c.JSON(400, gin.H{"message":"Invalid user id"})
 		return
 	}
 	form := new(BookForm)
 	err = c.BindJSON(form)
 	if err != nil {
-		c.JSON(400, "Invalid user book form")
+		c.JSON(400, gin.H{"message":"Invalid user book form"})
 		return
 	}
 	user := new(User)
 	db.Where("id=?", id).Find(&user)
 	if user.ID == 0 {
-		c.JSON(404, "Invalid user")
+		c.JSON(404, gin.H{"message":"Invalid user"})
 		return
 	}
 	db.Model(&user).Association("Likes").Append(&Book{ISBN: form.ISBN, Title: form.Title})
 	c.Status(200)
 }
 
-func LoginHandler(c *gin.Context) {
+func LoginRegisterHandler(c *gin.Context) {
 	form := new(UserForm)
 	err := c.BindJSON(form)
 	if err != nil {
-		c.AbortWithStatus(400)
+		c.AbortWithStatusJSON(400, gin.H{"message": http.StatusBadRequest})
 		return
 	}
 	var user User
-	fmt.Println(form.Username)
-	db.Debug().Preload("Likes").Preload("Dislikes").Where("username = ?", form.Username).Find(&user)
-	fmt.Println(user)
+	db.Debug().Preload("Likes").Preload("Dislikes").Where("username = ? AND password = ?", form.Username, form.Password).FirstOrCreate(&user, User{Username: form.Username, Password: form.Password})
 	if user.ID == 0 {
-		c.JSON(404, "Invalid user")
+		c.JSON(404, gin.H{"message":"Invalid credentials"})
 		return
 	}
-	if user.Password != form.Password {
-		c.JSON(404, "Invalid credentials")
-		return
-	}
-	c.JSON(200, gin.H{"user": user})
-}
-
-func RegisterHandler(c *gin.Context) {
-	form := new(UserForm)
-	err := c.BindJSON(form)
-	if err != nil {
-		c.AbortWithStatusJSON(400, http.StatusBadRequest)
-		return
-	}
-	var user User
-	db.Debug().Preload("Likes").Preload("Dislikes").FirstOrCreate(&user, User{Username: form.Username, Password: form.Password})
 	c.JSON(200, gin.H{"user": &user})
 }

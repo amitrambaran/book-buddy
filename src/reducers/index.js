@@ -1,0 +1,12 @@
+import { LOGIN } from '../constants/action-types'
+
+function rootReducer(state, action) {
+  console.log(action)
+  switch (action.type){
+    case LOGIN:
+      return {...state, user: action.payload}
+  }
+  return state;
+};
+
+export default rootReducer;
