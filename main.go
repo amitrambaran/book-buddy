@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -22,12 +21,18 @@ func init() {
 		fmt.Print(e)
 	}
 
-	username := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	dbName := os.Getenv("DB_NAME")
-	dbHost := os.Getenv("DB_HOST")
+	// username := os.Getenv("DB_USER")
+	// password := os.Getenv("DB_PASSWORD")
+	// dbName := os.Getenv("DB_NAME")
+	// dbHost := os.Getenv("DB_HOST")
+
+	username := "postgres"
+	password := "example"
+	dbName := "postgres"
+	dbHost := "localhost"
 
 	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, username, dbName, password)
+	// dbUri = "host=db port=5432 user=postgres dbname=postgres password=example"
 
 	var err error
 	db, err = gorm.Open("postgres", dbUri)
@@ -43,7 +48,6 @@ func init() {
 
 func main() {
 	router := gin.Default()
-
 	api := router.Group("/api")
 	{
 		api.GET("/", func(c *gin.Context) {
@@ -58,7 +62,7 @@ func main() {
 		api.POST("/register", RegisterHandler)
 	}
 
-	router.Run(":3000")
+	router.Run(":8080")
 }
 
 type BookForm struct {

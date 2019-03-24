@@ -53,6 +53,15 @@ REST API:
 * Heroku
 * Digital Ocean servlet
 
+# Backend Development
+## Prerequisites
+* Install GoLang
+* Install docker-compose
+
+## Instructions (In seperate terminals)
+1. docker-compose up
+2. go run main.go
+
 # How to Start Developing
 ## Installation Requirements
 * NodeJS
