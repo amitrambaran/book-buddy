@@ -8,6 +8,7 @@ import (
 
 	"fmt"
 
+	"github.com/gin-contrib/cors"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
@@ -32,22 +33,24 @@ func init() {
 	dbHost := "localhost"
 
 	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, username, dbName, password)
-	// dbUri = "host=db port=5432 user=postgres dbname=postgres password=example"
 
 	var err error
 	db, err = gorm.Open("postgres", dbUri)
 	if err != nil {
 		fmt.Print(err)
 	}
+	db.Set("gorm:auto_preload", true)
 	db.Debug().DropTableIfExists(&User{}, &Book{})
 
 	db.Debug().AutoMigrate(&User{}, &Book{})
 
-	defer db.Close()
 }
 
 func main() {
 	router := gin.Default()
+
+	router.Use(cors.Default())
+
 	api := router.Group("/api")
 	{
 		api.GET("/", func(c *gin.Context) {
@@ -156,9 +159,9 @@ func LoginHandler(c *gin.Context) {
 		c.AbortWithStatus(400)
 		return
 	}
-	user := new(User)
+	var user User
 	fmt.Println(form.Username)
-	db.Debug().Where("username = ?", form.Username).Find(&user)
+	db.Debug().Preload("Likes").Preload("Dislikes").Where("username = ?", form.Username).Find(&user)
 	fmt.Println(user)
 	if user.ID == 0 {
 		c.JSON(404, "Invalid user")
@@ -178,11 +181,7 @@ func RegisterHandler(c *gin.Context) {
 		c.AbortWithStatusJSON(400, http.StatusBadRequest)
 		return
 	}
-	user := &User{Username: form.Username, Password: form.Password}
-	db.Debug().Save(user)
-	if user.ID == 0 {
-		c.JSON(400, "User already  exists")
-		return
-	}
-	c.JSON(200, gin.H{"user": user})
+	var user User
+	db.Debug().Preload("Likes").Preload("Dislikes").FirstOrCreate(&user, User{Username: form.Username, Password: form.Password})
+	c.JSON(200, gin.H{"user": &user})
 }
