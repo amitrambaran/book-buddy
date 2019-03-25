@@ -20,8 +20,8 @@ export default class RecommendationBar extends Component {
 
   onGoSubmit(e) {
     e.preventDefault();
-    let query = this.state.query.replace(/\s+/g, '+');
     let mockdata = require('../../mock.json')
+    // let query = this.state.query.replace(/\s+/g, '+');
     // There's an issue with CORS permissions
     // let key = "127938-BookBudd-KF4QNLL5";
     // let url = `https://tastedive.com/api/similar?q=${query}&type=books&info=1&k=${key}`

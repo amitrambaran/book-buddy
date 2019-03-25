@@ -12,7 +12,11 @@ export default class StateLoader {
   
   loadState(){
     let serializedState = localStorage.getItem(url);
-    return JSON.parse(serializedState);
+    if(serializedState === null || serializedState === {}){
+      return this.initialState();
+    } else {
+      return JSON.parse(serializedState);
+    }
   }
 
   initialState() {
