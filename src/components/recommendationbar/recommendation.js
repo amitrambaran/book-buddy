@@ -20,17 +20,13 @@ export default class RecommendationBar extends Component {
 
   onGoSubmit(e) {
     e.preventDefault();
-    let mockdata = require('../../mock.json')
-    // let query = this.state.query.replace(/\s+/g, '+');
-    // There's an issue with CORS permissions
-    // let key = "127938-BookBudd-KF4QNLL5";
-    // let url = `https://tastedive.com/api/similar?q=${query}&type=books&info=1&k=${key}`
-    // fetch(url, {
-    //   method: 'GET',
-    //   headers: { 'Content-Type': 'application/json' },
-    // }).then((response) => {return response.json()})
-    // .then((data) => console.log(data.results))
-    this.getBookDetails(mockdata.Similar.Results)
+    let query = this.state.query.replace(/\s+/g, '+');
+    let key = "127938-BookBudd-1BYV73T6";
+    let baseUrl = "https://cors-anywhere.herokuapp.com/";
+    let url = `https://tastedive.com/api/similar?q=${query}&type=books&info=1&k=${key}`
+    fetch(baseUrl + url)
+    .then((response) => {return response.json()})
+    .then((data) => this.getBookDetails(data.Similar.Results));
   }
   
   getBookDetails(recommendations){
