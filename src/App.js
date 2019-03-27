@@ -18,27 +18,7 @@ import Upload from './components/pages/upload';
 /* Components */
 import Navbar from './components/navBar/navBar';
 
-/* Store */
-import { addBooks } from './actions/index'
-
-
 class App extends Component {
-
-  // state = {
-  //   // Hardcoded dummy data, JSON attributes TBD.
-  //   books: [],
-  //   user : null
-  // }
-
-  // Triggers on component mount.
-  componentDidMount() {
-    // API call.
-    // var URL = 'http://my-json-server.typicode.com/amitrambaran/book-buddy/books/'
-    // console.log(URL)
-    // Axios.get(URL).then(res =>
-    //   this.props.books = res.data
-    // )
-  }
 
   render() {
     return (

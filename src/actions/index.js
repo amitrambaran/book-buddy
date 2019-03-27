@@ -1,7 +1,11 @@
-import { LOGIN, ADDBOOKS, LIKEBOOK, DISLIKEBOOK } from '../constants/action-types'
+import { LOGIN, ADDBOOKS, LIKEBOOK, DISLIKEBOOK, LOGOUT } from '../constants/action-types'
 
 export function loginUser(payload) {
   return { type: LOGIN, payload }
+}
+
+export function logoutUser(payload) {
+  return { type: LOGOUT, payload }
 }
 
 export function addBooks(payload) {

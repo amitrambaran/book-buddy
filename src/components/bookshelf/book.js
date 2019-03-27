@@ -9,7 +9,6 @@ class Book extends Component {
     this.state = {
       disabled: false
     }
-    console.log(this.props)
     this.onPlusClick = this.onPlusClick.bind(this);
     this.onMinusClick = this.onMinusClick.bind(this);
   }
@@ -27,7 +26,7 @@ class Book extends Component {
           this.props.likeBook(bookToAdd)
           break;
         default:
-          console.log('Error')
+          // Add error handling
           return;
       }
     })
@@ -60,7 +59,7 @@ class Book extends Component {
     return (
       <Card style={{ maxWidth: '20em' }}>
         <Card.Img src={`http://covers.openlibrary.org/b/isbn/${this.props.isbn}-L.jpg`} />
-        {this.props.likeable ? (
+        {this.props.likeable && 
           <div>
             <Button
               style={{ position: 'absolute', top: '10px', right: '10px', background: 'green' }}
@@ -73,9 +72,7 @@ class Book extends Component {
               disabled={this.state.disabled}
             >-</Button>
           </div>
-        ) : (<div></div>
-
-          )}
+        }
         <Card.Body  >
           <Card.Title>{this.props.title}</Card.Title>
           <Card.Text style={{ fontSize: '0.8em' }}>
@@ -92,7 +89,5 @@ const mapDispatchToProps = {
   dislikeBook: (book) => dislikeBook(book)
 }
 
-const ConnectedBook = connect(null, mapDispatchToProps)(Book);
-
-export default ConnectedBook;
+export default connect(null, mapDispatchToProps)(Book);
 

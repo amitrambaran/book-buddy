@@ -1,10 +1,12 @@
-import { LOGIN, ADDBOOKS, LIKEBOOK, DISLIKEBOOK } from '../constants/action-types'
+import { LOGIN, LOGOUT, ADDBOOKS, LIKEBOOK, DISLIKEBOOK } from '../constants/action-types'
 
 function rootReducer(state, action) {
-  console.log(action)
+  console.log(state)
   switch (action.type){
     case LOGIN:
       return {...state, user: action.payload}
+    case LOGOUT:
+      return {user: null, books: []}
     case ADDBOOKS:
       return {...state, book: [...state.books, action.payload]}
     case LIKEBOOK:

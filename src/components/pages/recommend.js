@@ -9,8 +9,6 @@ export default class Recommend extends Component {
       query: '',
       recommendations: []
     }
-
-    console.log(this.props.user);
     this.onQueryChange = this.onQueryChange.bind(this);
     this.onGoSubmit = this.onGoSubmit.bind(this);
   }
