@@ -15,6 +15,7 @@ class NavBar extends Component {
     this.props.logout();
   }
 
+
   render() {
     return (
       <React.Fragment>
