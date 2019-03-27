@@ -5,12 +5,21 @@
   padding: 0;
 }
 
-body {
+/* Take up entire screen */
+html, body, .App, #root {
+  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  font-size: 20px;
+}
+
+.App {
+  text-align: center;
+  background-color: rgb(230, 230, 230);
 }
 
 a {
@@ -23,6 +32,39 @@ a:hover {
   color: black;
 }
 
-.App {
-  text-align: center;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.container>* {
+  width: 100%;
+}
+
+/* Line break */
+.break {
+  width: 100%;
+  height: 25px;
+}
+
+/* Main Panel */
+/* generic area to display information throughout the site */
+.main-panel-container {
+  background-color: white;
+  width: 100%;
+  padding: 15px;
+}
+
+.main-panel-container header {
+  font-size: 24px;
+  text-align: left;
+}
+
+.main-panel-container hr {
+  border : 0;
+  height: 2px;
+  margin: 10px 0px;
+  background-image: linear-gradient(to right, rgba(200, 200, 200, 0.75), rgba(200, 200, 200, 0.3), rgba(200, 200, 200, 0));
 }

@@ -46,7 +46,8 @@ class App extends Component {
           <Navbar />
           <br />
 
-          {/* Route for Homepage */}
+          <div class="container">
+            {/* Route for Homepage */}
           <Route exact path="/" render={props => (
             <React.Fragment>
               <Homepage books={this.props.userbooks} />
@@ -94,6 +95,7 @@ class App extends Component {
               <Upload />
             </React.Fragment>
           )} />
+          </div>
         </div>
       </Router>
     );
