@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
-import Axios from 'axios';
 
 /* Page Routes */
 import About from './components/pages/about';
@@ -12,7 +11,6 @@ import Homepage from './components/pages/homepage';
 import Library from './components/pages/library';
 import Login from './components/pages/login';
 import Recommend from './components/pages/recommend';
-import Saved from './components/pages/saved';
 import Upload from './components/pages/upload';
 
 /* Components */
@@ -27,7 +25,8 @@ class App extends Component {
           <Navbar />
           <br />
 
-          {/* Route for Homepage */}
+          <div className="container">
+            {/* Route for Homepage */}
           <Route exact path="/" render={props => (
             <React.Fragment>
               <Homepage books={this.props.userbooks} />
@@ -41,47 +40,41 @@ class App extends Component {
             </React.Fragment>
           )} />
 
-          {/* Route for About page */}
+          {/* Route for Book Details page */}
           <Route path="/book" render={props => (
             <React.Fragment>
               <Book />
             </React.Fragment>
           )} />
 
-          {/* Route for About page */}
+          {/* Route for Libray page */}
           <Route path="/library" render={props => (
             <React.Fragment>
               <Library />
             </React.Fragment>
           )} />
 
-          {/* Route for About page */}
+          {/* Route for Login page */}
           <Route path="/login" render={props => (
             <React.Fragment>
               <Login />
             </React.Fragment>
           )} />
 
-          {/* Route for About page */}
+          {/* Route for Recommend page */}
           <Route path="/recommend" render={props => (
             <React.Fragment>
               <Recommend user={this.props.currentuser}/>
             </React.Fragment>
           )} />
 
-          {/* Route for About page */}
-          <Route path="/saved" render={props => (
-            <React.Fragment>
-              <Saved />
-            </React.Fragment>
-          )} />
-
-          {/* Route for About page */}
+          {/* Route for Upload page */}
           <Route path="/upload" render={props => (
             <React.Fragment>
               <Upload />
             </React.Fragment>
           )} />
+          </div>
         </div>
       </Router>
     );

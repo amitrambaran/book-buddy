@@ -69,29 +69,37 @@ class LoginPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Login/Register</h1>
-        <Form onSubmit={(e) => this.loginSubmit(e)} style={{maxWidth: '40em', margin: '0 auto'}}>
-          <h4>{this.state.error}</h4>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter username"
-              value={this.state.username}
-              onChange={this.usernameChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={this.passwordChange}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">Submit</Button>
-        </Form>
+        <div className="main-login-container">
+
+          <div className="side-panel">B<span style={{ color: '#17a2b8' }}>B</span></div>
+
+          <div className="login-container">
+            <header>Login/Register</header>
+            <hr></hr>
+            <Form onSubmit={(e) => this.loginSubmit(e)} style={{maxWidth: '40em', margin: '0 auto'}}>
+            <h4>{this.state.error}</h4>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter username"
+                value={this.state.username}
+                onChange={this.usernameChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={this.passwordChange}
+              />
+            </Form.Group>
+            <Button variant="info" type="submit">Submit</Button>
+          </Form>
+          </div>
+        </div>
       </React.Fragment>
     )
   }

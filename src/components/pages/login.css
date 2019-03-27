@@ -1,0 +1,39 @@
+/* Main Panel */
+/* generic area to display information throughout the site */
+.main-login-container {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    height: 100%;
+    width: 80%;
+}
+
+.side-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 600px;
+    background-color: #343a40;
+    color: white;
+    font-size: 180px;
+    font-weight: bold
+}
+
+.login-container {
+    background-color: white;
+    width: 100%;
+    padding: 15px;
+}
+
+.login-container header {
+    font-size: 24px;
+    text-align: left;
+}
+
+.login-container hr {
+    border : 0;
+    height: 2px;
+    margin: 10px 0px;
+    background-image: linear-gradient(to right, rgba(200, 200, 200, 0.75), rgba(200, 200, 200, 0.3), rgba(200, 200, 200, 0));
+}
