@@ -11,7 +11,6 @@ export default class navBar extends Component {
                 <Nav className="mr-auto">
                 <Nav.Link href="/library">Library</Nav.Link>
                 <Nav.Link href="/recommend">Recommendations</Nav.Link>
-                <Nav.Link href="/saved">Saved Books</Nav.Link>
                 <Nav.Link href="/upload">Upload/Publish</Nav.Link>
             </Nav>
             <Form inline>
