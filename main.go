@@ -80,27 +80,27 @@ type UserForm struct {
 type User struct {
 	gorm.Model
 	Username string  `json:"username" binding:"required" gorm:"unique_index"`
-	Password string  `json:"password" binding:"required"`
+	Password string  `json:"-" binding:"required"`
 	Likes    []*Book `json:"likes" gorm:"many2many:user_likes;association_foreignkey:user_id;association_foreignkey:ISBN;"`
 	Dislikes []*Book `json:"dislikes" gorm:"many2many:user_dislikes;association_foreignkey:user_id;association_foreignkey:ISBN;"`
 }
 
 type Book struct {
-	ISBN  string `json:"ISBN" binding:"required" gorm:"unique_index"`
-	Title string `json:"title" binding:"required"`
+	ISBN    string `json:"ISBN" binding:"required" gorm:"unique_index"`
+	Title   string `json:"title" binding:"required"`
 	Details string `json:"details" binding:"required"`
 }
 
 func GetUserNameHandler(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(400, gin.H{"message":"Invalid user id"})
+		c.JSON(400, gin.H{"message": "Invalid user id"})
 		return
 	}
 	user := new(User)
 	db.Where("id=?", id).Find(&user)
 	if user.ID == 0 {
-		c.JSON(404, gin.H{"message":"Invalid user"})
+		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
 	c.JSON(200, gin.H{"username": user.Username})
@@ -110,19 +110,19 @@ func DislikeBookHandler(c *gin.Context) {
 	var err error
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(400, gin.H{"message":"Invalid user id"})
+		c.JSON(400, gin.H{"message": "Invalid user id"})
 		return
 	}
 	form := new(BookForm)
 	err = c.BindJSON(form)
 	if err != nil {
-		c.JSON(400, gin.H{"message":"Invalid user book form"})
+		c.JSON(400, gin.H{"message": "Invalid user book form"})
 		return
 	}
 	user := new(User)
 	db.Where("id=?", id).Find(&user)
 	if user.ID == 0 {
-		c.JSON(404, gin.H{"message":"Invalid user"})
+		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
 	db.Model(&user).Association("Disikes").Append(&Book{ISBN: form.ISBN, Title: form.Title})
@@ -133,19 +133,19 @@ func LikeBookHandler(c *gin.Context) {
 	var err error
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(400, gin.H{"message":"Invalid user id"})
+		c.JSON(400, gin.H{"message": "Invalid user id"})
 		return
 	}
 	form := new(BookForm)
 	err = c.BindJSON(form)
 	if err != nil {
-		c.JSON(400, gin.H{"message":"Invalid user book form"})
+		c.JSON(400, gin.H{"message": "Invalid user book form"})
 		return
 	}
 	user := new(User)
 	db.Where("id=?", id).Find(&user)
 	if user.ID == 0 {
-		c.JSON(404, gin.H{"message":"Invalid user"})
+		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
 	db.Model(&user).Association("Likes").Append(&Book{ISBN: form.ISBN, Title: form.Title})
@@ -162,7 +162,7 @@ func LoginRegisterHandler(c *gin.Context) {
 	var user User
 	db.Debug().Preload("Likes").Preload("Dislikes").Where("username = ? AND password = ?", form.Username, form.Password).FirstOrCreate(&user, User{Username: form.Username, Password: form.Password})
 	if user.ID == 0 {
-		c.JSON(404, gin.H{"message":"Invalid credentials"})
+		c.JSON(404, gin.H{"message": "Invalid credentials"})
 		return
 	}
 	c.JSON(200, gin.H{"user": &user})

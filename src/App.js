@@ -85,7 +85,7 @@ class App extends Component {
           {/* Route for About page */}
           <Route path="/recommend" render={props => (
             <React.Fragment>
-              <Recommend />
+              <Recommend user={this.props.currentuser}/>
             </React.Fragment>
           )} />
 

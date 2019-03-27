@@ -59,6 +59,8 @@ class LoginPage extends Component {
         this.setState({error: data.message });
         console.log(this.state)
       } else {
+        data.user.dislikes = (data.user.dislikes) ? data.user.dislikes : [];
+        data.user.likes = (data.user.likes) ? data.user.likes : [];
         this.props.login( data.user );
       }
     })
@@ -68,7 +70,7 @@ class LoginPage extends Component {
     return (
       <React.Fragment>
         <h1>Login/Register</h1>
-        <Form onSubmit={(e) => this.loginSubmit(e)}>
+        <Form onSubmit={(e) => this.loginSubmit(e)} style={{maxWidth: '40em', margin: '0 auto'}}>
           <h4>{this.state.error}</h4>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Username</Form.Label>
