@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Navbar, Nav, Form, FormControl } from 'react-bootstrap'
+import {Link, LinkProps} from "react-router-dom";
 
 // Navigation Bar Component
 export default class navBar extends Component {
@@ -17,6 +18,8 @@ export default class navBar extends Component {
                 <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                 <Button variant="outline-info">Search</Button>
             </Form>
+            
+            <Button variant="info" style={{ marginLeft: '15px' }} href='/login'>Login</Button>
         </Navbar>
       </React.Fragment>
     )
