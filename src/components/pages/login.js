@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/index'
-import { style } from './login.css'
+import style from './login.css'
 
 class LoginPage extends Component {
   constructor(props) {
@@ -68,7 +68,7 @@ class LoginPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="main-panel-container">
+        <div className="main-login-container">
 
           <div className="side-panel">B<span style={{ color: '#17a2b8' }}>B</span></div>
 
