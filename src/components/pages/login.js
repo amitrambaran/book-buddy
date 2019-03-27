@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/index'
-import style from './login.css'
 
 class LoginPage extends Component {
   constructor(props) {
@@ -60,6 +59,8 @@ class LoginPage extends Component {
         this.setState({error: data.message });
         console.log(this.state)
       } else {
+        data.user.dislikes = (data.user.dislikes) ? data.user.dislikes : [];
+        data.user.likes = (data.user.likes) ? data.user.likes : [];
         this.props.login( data.user );
       }
     })
@@ -75,7 +76,7 @@ class LoginPage extends Component {
           <div className="login-container">
             <header>Login/Register</header>
             <hr></hr>
-            <Form onSubmit={(e) => this.loginSubmit(e)}>
+            <Form onSubmit={(e) => this.loginSubmit(e)} style={{maxWidth: '40em', margin: '0 auto'}}>
             <h4>{this.state.error}</h4>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Username</Form.Label>

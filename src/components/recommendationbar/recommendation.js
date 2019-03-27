@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormControl } from 'react-bootstrap';
+import Book from '../bookshelf/book';
 
 
 export default class RecommendationBar extends Component {
@@ -20,13 +21,16 @@ export default class RecommendationBar extends Component {
 
   onGoSubmit(e) {
     e.preventDefault();
-    let query = this.state.query.replace(/\s+/g, '+');
-    let key = "127938-BookBudd-1BYV73T6";
-    let baseUrl = "https://cors-anywhere.herokuapp.com/";
-    let url = `https://tastedive.com/api/similar?q=${query}&type=books&info=1&k=${key}`
-    fetch(baseUrl + url)
-    .then((response) => {return response.json()})
-    .then((data) => this.getBookDetails(data.Similar.Results));
+    this.setState({recommendations: []});
+    let mockdata = require('../../mock.json');
+    // let query = this.state.query.replace(/\s+/g, '+');
+    // let key = "127938-BookBudd-1BYV73T6";
+    // let baseUrl = "https://cors-anywhere.herokuapp.com/";
+    // let url = `https://tastedive.com/api/similar?q=${query}&type=books&info=1&k=${key}`
+    // fetch(baseUrl + url)
+    // .then((response) => {return response.json()})
+    // .then((data) => this.getBookDetails(data.Similar.Results));
+    this.getBookDetails(mockdata.Similar.Results);
   }
   
   getBookDetails(recommendations){
@@ -58,9 +62,9 @@ export default class RecommendationBar extends Component {
           className="mr-sm-2"
         />
         <Button variant="outline-info" onClick={this.onGoSubmit}>Go</Button>
-        <div>
+        <div style={{width: '80%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', flexFlow: 'wrap'}}>
           {this.state.recommendations.map(book => (
-            <div>{JSON.stringify(book)}</div>
+            <Book key={book.isbn} isbn={book.isbn} title={book.title} description={book.description}/>
           ))}
         </div>
       </Form>

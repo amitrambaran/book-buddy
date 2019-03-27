@@ -1,28 +1,56 @@
-import React, { Component } from 'react'
-import { Button, Navbar, Nav, Form, FormControl } from 'react-bootstrap'
-import {Link, LinkProps} from "react-router-dom";
+import React, { Component } from 'react';
+import { Button, Navbar, Nav } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/index';
 
-// Navigation Bar Component
-export default class navBar extends Component {
+class NavBar extends Component {
+
+  constructor(props) {
+    super(props);
+    this.onLogoutClick = this.onLogoutClick.bind(this);
+  }
+
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.logout();
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="/">Book <span style={{ color: '#17a2b8' }}>Buddy</span></Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="/library">Library</Nav.Link>
-            <Nav.Link href="/recommend">Recommendations</Nav.Link>
-            <Nav.Link href="/upload">Upload/Publish</Nav.Link>
-          </Nav>
-
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" size="md"/>
-            <Button variant="outline-info" size="md">Search</Button>
-          </Form>
-          
-          <Button variant="info" style={{ marginLeft: '15px' }} href='/login' size="md">Login</Button>
+        <Navbar bg="dark" variant="dark" style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex' }}>
+            <Navbar.Brand href="/">Book Buddy</Navbar.Brand>
+            {
+              this.props.currentuser &&
+              <Nav className="mr-auto">
+                <Nav.Link href="/library">Library</Nav.Link>
+                <Nav.Link href="/recommend">Recommendations</Nav.Link>
+                <Nav.Link href="/upload">Upload/Publish</Nav.Link>
+              </Nav>
+            }
+          </div>
+          {
+            this.props.currentuser ?
+              <Button variant="outline-info" onClick={this.onLogoutClick}>Logout</Button> :
+              <Nav.Link href="/login">
+                <Button variant="info" style={{ marginLeft: '15px' }} size="md">Login</Button>
+              </Nav.Link>
+          }
         </Navbar>
       </React.Fragment>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    currentuser: state.user
+  }
+}
+
+const mapDispatchToProps = {
+  logout: () => logoutUser()
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

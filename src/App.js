@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
-import Axios from 'axios';
 
 /* Page Routes */
 import About from './components/pages/about';
@@ -17,27 +16,7 @@ import Upload from './components/pages/upload';
 /* Components */
 import Navbar from './components/navBar/navBar';
 
-/* Store */
-import { addBooks } from './actions/index'
-
-
 class App extends Component {
-
-  // state = {
-  //   // Hardcoded dummy data, JSON attributes TBD.
-  //   books: [],
-  //   user : null
-  // }
-
-  // Triggers on component mount.
-  componentDidMount() {
-    // API call.
-    // var URL = 'http://my-json-server.typicode.com/amitrambaran/book-buddy/books/'
-    // console.log(URL)
-    // Axios.get(URL).then(res =>
-    //   this.props.books = res.data
-    // )
-  }
 
   render() {
     return (
@@ -85,7 +64,7 @@ class App extends Component {
           {/* Route for Recommend page */}
           <Route path="/recommend" render={props => (
             <React.Fragment>
-              <Recommend />
+              <Recommend user={this.props.currentuser}/>
             </React.Fragment>
           )} />
 
