@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Navbar, Nav, Form, FormControl } from 'react-bootstrap'
-import {Link, LinkProps} from "react-router-dom";
 
 // Navigation Bar Component
 export default class navBar extends Component {
