@@ -46,7 +46,7 @@ class App extends Component {
           <Navbar />
           <br />
 
-          <div class="container">
+          <div className="container">
             {/* Route for Homepage */}
           <Route exact path="/" render={props => (
             <React.Fragment>

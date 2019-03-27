@@ -68,11 +68,11 @@ class LoginPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <div class="main-panel-container">
+        <div className="main-panel-container">
 
-          <div class="side-panel">B<span style={{ color: '#17a2b8' }}>B</span></div>
+          <div className="side-panel">B<span style={{ color: '#17a2b8' }}>B</span></div>
 
-          <div class="login-container">
+          <div className="login-container">
             <header>Login/Register</header>
             <hr></hr>
             <Form onSubmit={(e) => this.loginSubmit(e)}>
