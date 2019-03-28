@@ -2,20 +2,16 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-type Story struct {
-	gorm.Model
-	Title    string    `json:"title" binding:"required"`
-	Content  string    `json:"content" binding:"required"`
-	Username string    `json:"reviewer" binding:"required" gorm:"foreignkey:username"`
-	Reviews  []*Review `json:"reviews" gorm:"foreignkey:StoryID"`
+type ReviewForm struct {
+	Comment  string `json:"comment" binding:"required"`
+	Reviewer string `json:"reviewer" binding:"required"`
+	Score    uint   `json:"score" binding:"required"`
 }
 
-type Review struct {
-	ReviewID int    `gorm:"primary_key"`
-	Title    string `json:"title" binding:"required"`
-	Score    uint   `json:"score" binding:"required"`
-	Username string `json:"reviewer" binding:"required" gorm:"ForeignKey:username"`
-	StoryID  int
+type StoryForm struct {
+	Title   string `json:"title" binding:"required"`
+	Content string `json:"content" binding:"required"`
+	Author  string `json:"author" binding:"required"`
 }
 
 type BookForm struct {
@@ -40,4 +36,19 @@ type Book struct {
 	ISBN        string `json:"ISBN" binding:"required" gorm:"unique_index"`
 	Title       string `json:"title" binding:"required"`
 	Description string `json:"description" binding:"required"`
+}
+
+type Story struct {
+	gorm.Model
+	Title   string    `json:"title" binding:"required"`
+	Content string    `json:"content" binding:"required"`
+	Author  string    `json:"author" binding:"required"`
+	Reviews []*Review `json:"reviews" gorm:"many2many:story_reviews;association_foreignkey:story_id;association_foreignkey:id;"`
+}
+
+type Review struct {
+	gorm.Model
+	Comment  string `json:"comment" binding:"required"`
+	Score    uint   `json:"score" binding:"required"`
+	Reviewer string `json:"reviewer" binding:"required" gorm:"ForeignKey:username"`
 }

@@ -27,7 +27,6 @@ class Library extends Component {
                   <Book key={book.isbn} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
                 ))
             ) || <h6>You have no Books</h6>}
-
           </div>
         </div>
 
