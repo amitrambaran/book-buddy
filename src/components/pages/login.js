@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/index'
+import { loginUser } from '../../actions/index';
+import { withRouter } from 'react-router-dom';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -62,6 +63,7 @@ class LoginPage extends Component {
         data.user.dislikes = (data.user.dislikes) ? data.user.dislikes : [];
         data.user.likes = (data.user.likes) ? data.user.likes : [];
         this.props.login( data.user );
+        this.setState({error: '' });
       }
     })
   }
@@ -111,4 +113,4 @@ const mapDispatchToProps = {
 
 const ConnectedLoginPage = connect(null, mapDispatchToProps)(LoginPage);
 
-export default ConnectedLoginPage;
+export default withRouter(ConnectedLoginPage);
