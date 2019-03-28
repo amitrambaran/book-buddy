@@ -39,7 +39,14 @@ class App extends Component {
               <About />
             </React.Fragment>
           )} />
-
+          
+          {/* Route for Login page */}
+          <Route path="/login" render={props => (
+            <React.Fragment>
+              <Login />
+            </React.Fragment>
+          )} />
+          
           {/* Route for Book Details page */}
           <Route path="/book" render={props => (
             <React.Fragment>
@@ -48,18 +55,8 @@ class App extends Component {
           )} />
 
           {/* Route for Libray page */}
-          <Route path="/library" render={props => (
-            <React.Fragment>
-              <Library />
-            </React.Fragment>
-          )} />
+          <Route path="/library" component={Library}/>
 
-          {/* Route for Login page */}
-          <Route path="/login" render={props => (
-            <React.Fragment>
-              <Login />
-            </React.Fragment>
-          )} />
 
           {/* Route for Recommend page */}
           <Route path="/recommend" render={props => (

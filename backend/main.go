@@ -8,6 +8,8 @@ import (
 
 	"fmt"
 
+	"./models"
+
 	"github.com/gin-contrib/cors"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -40,10 +42,14 @@ func init() {
 		fmt.Print(err)
 	}
 	db.Set("gorm:auto_preload", true)
-	db.Debug().DropTableIfExists(&User{}, &Book{})
 
-	db.Debug().AutoMigrate(&User{}, &Book{})
+	db.Debug().DropTableIfExists(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
 
+	db.Debug().AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
+	// db.Model(&models.Story{}).AddForeignKey("username", "users(username)", "CASCADE", "CASCADE")
+	// db.Model(&models.Story{}).AddForeignKey("story_id", "stories(id)", "CASCADE", "CASCADE")
+
+	// db.Model(&models.Review{}).AddForeignKey("username", "users(username)", "CASCADE", "CASCADE")
 }
 
 func main() {
@@ -67,37 +73,13 @@ func main() {
 	router.Run(":8080")
 }
 
-type BookForm struct {
-	ISBN  string `json:"ISBN" binding:"required"`
-	Title string `json:"title" binding:"required"`
-}
-
-type UserForm struct {
-	Username string `form:"username" binding:"required"`
-	Password string `form:"password" binding:"required"`
-}
-
-type User struct {
-	gorm.Model
-	Username string  `json:"username" binding:"required" gorm:"unique_index"`
-	Password string  `json:"-" binding:"required"`
-	Likes    []*Book `json:"likes" gorm:"many2many:user_likes;association_foreignkey:user_id;association_foreignkey:ISBN;"`
-	Dislikes []*Book `json:"dislikes" gorm:"many2many:user_dislikes;association_foreignkey:user_id;association_foreignkey:ISBN;"`
-}
-
-type Book struct {
-	ISBN    string `json:"ISBN" binding:"required" gorm:"unique_index"`
-	Title   string `json:"title" binding:"required"`
-	Details string `json:"details" binding:"required"`
-}
-
 func GetUserNameHandler(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Invalid user id"})
 		return
 	}
-	user := new(User)
+	user := new(models.User)
 	db.Where("id=?", id).Find(&user)
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid user"})
@@ -113,19 +95,19 @@ func DislikeBookHandler(c *gin.Context) {
 		c.JSON(400, gin.H{"message": "Invalid user id"})
 		return
 	}
-	form := new(BookForm)
+	form := new(models.BookForm)
 	err = c.BindJSON(form)
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Invalid user book form"})
 		return
 	}
-	user := new(User)
-	db.Where("id=?", id).Find(&user)
+	user := new(models.User)
+	db.Where("id=?", id).Find(user)
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
-	db.Model(&user).Association("Disikes").Append(&Book{ISBN: form.ISBN, Title: form.Title})
+	db.Model(user).Association("Disikes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title})
 	c.Status(200)
 }
 
@@ -136,34 +118,34 @@ func LikeBookHandler(c *gin.Context) {
 		c.JSON(400, gin.H{"message": "Invalid user id"})
 		return
 	}
-	form := new(BookForm)
+	form := new(models.BookForm)
 	err = c.BindJSON(form)
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Invalid user book form"})
 		return
 	}
-	user := new(User)
-	db.Where("id=?", id).Find(&user)
+	user := new(models.User)
+	db.Where("id=?", id).Find(user)
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
-	db.Model(&user).Association("Likes").Append(&Book{ISBN: form.ISBN, Title: form.Title})
+	db.Model(user).Association("Likes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title})
 	c.Status(200)
 }
 
 func LoginRegisterHandler(c *gin.Context) {
-	form := new(UserForm)
+	form := new(models.UserForm)
 	err := c.BindJSON(form)
 	if err != nil {
 		c.AbortWithStatusJSON(400, gin.H{"message": http.StatusBadRequest})
 		return
 	}
-	var user User
-	db.Debug().Preload("Likes").Preload("Dislikes").Where("username = ? AND password = ?", form.Username, form.Password).FirstOrCreate(&user, User{Username: form.Username, Password: form.Password})
+	var user models.User
+	db.Debug().Preload("Likes").Preload("Dislikes").Where("username = ? AND password = ?", form.Username, form.Password).FirstOrCreate(&user, &models.User{Username: form.Username, Password: form.Password})
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid credentials"})
 		return
 	}
-	c.JSON(200, gin.H{"user": &user})
+	c.JSON(200, gin.H{"user": user})
 }
