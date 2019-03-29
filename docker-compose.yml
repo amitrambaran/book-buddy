@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.7'
 services:
   redis:
     image: redis:alpine
@@ -9,10 +9,16 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: example
-    ports:
-      - 5432:5432
     volumes:
       - database_data:/var/lib/postgresql/data
+  api:
+    build:
+      context: ./backend
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+      - redis
 
 volumes:
   database_data:
