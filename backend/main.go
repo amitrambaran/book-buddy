@@ -70,6 +70,9 @@ func main() {
 		api.POST("/login", LoginRegisterHandler)
 		api.POST("/story", AddStoryHandler)
 		api.GET("/story/:id", GetStoryHandler)
+		api.GET("/stories/:n", GetStoriesHandler)
+		api.GET("/userstories/:username", GetUserStoriesHandler)
+		api.GET("/newstories/:n", GetStoriesHandler)
 		api.POST("/review/:id", AddReviewHandler)
 	}
 
@@ -114,14 +117,49 @@ func GetUserNameHandler(c *gin.Context) {
 	c.JSON(200, gin.H{"username": user.Username})
 }
 
+func GetUserStoriesHandler(c *gin.Context) {
+	username := c.Param("username")
+	var stories []*models.Story
+	db.Debug().Preload("Reviews").Where("author = ?", username).Find(&stories)
+	c.JSON(200, gin.H{"stories": stories})
+}
+
+func GetNewStoriesHandler(c *gin.Context) {
+	n, err := strconv.Atoi(c.Param("n"))
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid quantity amount"})
+		return
+	}
+	if n > 10 {
+		n = 10
+	}
+	var stories []*models.Story
+	db.Debug().Preload("Reviews").Order("updated_at desc").Limit(n).Find(&stories)
+	c.JSON(200, gin.H{"stories": stories})
+}
+
+func GetStoriesHandler(c *gin.Context) {
+	n, err := strconv.Atoi(c.Param("n"))
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid quantity amount"})
+		return
+	}
+	if n > 10 {
+		n = 10
+	}
+	var stories []*models.Story
+	db.Debug().Preload("Reviews").Order(gorm.Expr("random()")).Limit(n).Find(&stories)
+	c.JSON(200, gin.H{"stories": stories})
+}
+
 func GetStoryHandler(c *gin.Context) {
-	// id, err := strconv.Atoi(c.Param("id"))
-	// if err != nil {
-	// 	c.JSON(400, gin.H{"message": "Invalid Story id"})
-	// 	return
-	// }
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid Story id"})
+		return
+	}
 	var story models.Story
-	db.Debug().Preload("Reviews").First(&story)
+	db.Debug().Preload("Reviews").Where("id = ?", id).First(&story)
 	if story.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid Story ID"})
 		return

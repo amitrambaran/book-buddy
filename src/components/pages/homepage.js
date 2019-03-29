@@ -1,36 +1,73 @@
 import React, { Component } from 'react'
-import Bookshelf from '../bookshelf/bookshelf';
+import StoryItem from  '../bookshelf/storyItem';
 
 export class homepage extends Component {
+  componentWillMount(){
+    this.getRandomStories(10);
+    this.getNewStories(10);
+  }
+
+  getRandomStories(n){
+    fetch('http://localhost:8080/api/stories/10')
+      .then((response) => {
+        switch (response.status) {
+          case 200:
+            break
+          default:
+            break;
+        }
+        return response.json()
+      }).then((data) => {
+        this.setState({randStories: data.stories})
+      })
+  }
+
+  getNewStories(n){
+    fetch('http://localhost:8080/api/newstories/10')
+      .then((response) => {
+        switch (response.status) {
+          case 200:
+            break
+          default:
+            break;
+        }
+        return response.json()
+      }).then((data) => {
+        this.setState({newStories: data.stories})
+      })
+  }
+
   render() {
     return (
         <React.Fragment>
             <h1>Homepage</h1>
-            <Bookshelf books={ this.props.books }/>
 
-            <div class="break"></div>
+            <div className="break"></div>
 
-            <div class="main-panel-container">
-              <header>Featured Books</header>
+            <div className="main-panel-container">
+              <header>New Stories</header>
               <hr></hr>
-              ... Books here ...
+              <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+                {this.state && this.state.newStories && this.state.newStories.map(story => (
+                  <StoryItem story={story}/>
+                )
+                )}
+              </div>
             </div>
 
-            <div class="break"></div>
+            <div className="break"></div>
 
-            <div class="main-panel-container">
-              <header>Top Books</header>
+            <div className="main-panel-container">
+              <header>Random Stories</header>
               <hr></hr>
-              ... Books here ...
+              <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+                {this.state && this.state.randStories && this.state.randStories.map(story => (
+                  <StoryItem story={story}/>
+                )
+                )}
+              </div>
             </div>
 
-            <div class="break"></div>
-
-            <div class="main-panel-container">
-              <header>Indie Authors</header>
-              <hr></hr>
-              ... Books here ...
-            </div>
         </React.Fragment>
     )
   }

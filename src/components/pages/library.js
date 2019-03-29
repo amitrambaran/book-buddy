@@ -1,8 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Book from '../bookshelf/book';
+import StoryItem from '../bookshelf/storyItem'
 
 class Library extends Component {
+  componentWillMount() {
+    if (this.props.currentuser) {
+      this.getUserStories(this.props.currentuser.username)
+    }
+  }
+
+  getUserStories(username) {
+    fetch(`http://localhost:8080/api/userstories/${username}`)
+      .then((response) => {
+        switch (response.status) {
+          case 200:
+            break
+          default:
+            break;
+        }
+        return response.json()
+      }).then((data) => {
+        this.setState({ userStories: data.stories })
+      })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -11,21 +33,13 @@ class Library extends Component {
         <div className="break"></div>
 
         <div className="main-panel-container">
-          <header>Favourited Books</header>
-          <hr></hr>
-          ... Books here ...
-        </div>
-
-        <div className="break"></div>
-
-        <div className="main-panel-container">
           <header>Liked Books</header>
           <hr></hr>
           <div>
             {(this.props.currentuser && this.props.currentuser.likes.length &&
-                this.props.currentuser.likes.map(book => (
-                  <Book key={book.isbn} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
-                ))
+              this.props.currentuser.likes.map(book => (
+                <Book key={book.isbn} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
+              ))
             ) || <h6>You have no Books</h6>}
           </div>
         </div>
@@ -33,17 +47,14 @@ class Library extends Component {
         <div className="break"></div>
 
         <div className="main-panel-container">
-          <header>Want to Read</header>
-          <hr></hr>
-          ... Books here ...
-        </div>
-
-        <div className="break"></div>
-
-        <div className="main-panel-container">
           <header>Your Uploads</header>
           <hr></hr>
-          ... Books here ...
+          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+            {this.state && this.state.userStories && this.state.userStories.map(story => (
+              <StoryItem story={story} />
+            )
+            )}
+          </div>
         </div>
       </React.Fragment>
     )
