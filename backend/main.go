@@ -2,8 +2,10 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"strconv"
 
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 
 	"fmt"
@@ -24,15 +26,10 @@ func init() {
 		fmt.Print(e)
 	}
 
-	// username := os.Getenv("DB_USER")
-	// password := os.Getenv("DB_PASSWORD")
-	// dbName := os.Getenv("DB_NAME")
-	// dbHost := os.Getenv("DB_HOST")
-
-	username := "postgres"
-	password := "example"
-	dbName := "postgres"
-	dbHost := "localhost"
+	username := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+	dbHost := os.Getenv("DB_HOST")
 
 	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, username, dbName, password)
 
@@ -42,14 +39,9 @@ func init() {
 		fmt.Print(err)
 	}
 	db.Set("gorm:auto_preload", true)
+	gin.SetMode(gin.ReleaseMode)
 
-	// db.Debug().DropTableIfExists(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
-
-	db.Debug().AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
-	// db.Model(&models.Story{}).AddForeignKey("story_id", "stories(id)", "CASCADE", "CASCADE")
-
-	// db.Model(&models.Story{}).AddForeignKey("author_username", "users(username)", "CASCADE", "CASCADE")
-	// db.Model(&models.Review{}).AddForeignKey("reviewer", "users(username)", "CASCADE", "CASCADE")
+	db.AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
 }
 
 func main() {
@@ -57,6 +49,7 @@ func main() {
 
 	router.Use(cors.Default())
 
+	router.Use(static.Serve("/", static.LocalFile("../build", true)))
 	api := router.Group("/api")
 	{
 		api.GET("/", func(c *gin.Context) {
@@ -120,7 +113,7 @@ func GetUserNameHandler(c *gin.Context) {
 func GetUserStoriesHandler(c *gin.Context) {
 	username := c.Param("username")
 	var stories []*models.Story
-	db.Debug().Preload("Reviews").Where("author = ?", username).Find(&stories)
+	db.Preload("Reviews").Where("author = ?", username).Find(&stories)
 	c.JSON(200, gin.H{"stories": stories})
 }
 
@@ -134,7 +127,7 @@ func GetNewStoriesHandler(c *gin.Context) {
 		n = 10
 	}
 	var stories []*models.Story
-	db.Debug().Preload("Reviews").Order("updated_at desc").Limit(n).Find(&stories)
+	db.Preload("Reviews").Order("updated_at desc").Limit(n).Find(&stories)
 	c.JSON(200, gin.H{"stories": stories})
 }
 
@@ -148,7 +141,7 @@ func GetStoriesHandler(c *gin.Context) {
 		n = 10
 	}
 	var stories []*models.Story
-	db.Debug().Preload("Reviews").Order(gorm.Expr("random()")).Limit(n).Find(&stories)
+	db.Preload("Reviews").Order(gorm.Expr("random()")).Limit(n).Find(&stories)
 	c.JSON(200, gin.H{"stories": stories})
 }
 
@@ -159,7 +152,7 @@ func GetStoryHandler(c *gin.Context) {
 		return
 	}
 	var story models.Story
-	db.Debug().Preload("Reviews").Where("id = ?", id).First(&story)
+	db.Preload("Reviews").Where("id = ?", id).First(&story)
 	if story.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid Story ID"})
 		return
@@ -175,7 +168,7 @@ func AddStoryHandler(c *gin.Context) {
 		return
 	}
 	var story models.Story
-	db.Debug().Preload("Reviews").Where("title = ? AND author = ?", form.Title, form.Author).FirstOrCreate(&story, &models.Story{Author: form.Author, Title: form.Title, Content: form.Content})
+	db.Preload("Reviews").Where("title = ? AND author = ?", form.Title, form.Author).FirstOrCreate(&story, &models.Story{Author: form.Author, Title: form.Title, Content: form.Content})
 	c.JSON(200, gin.H{"story": story})
 }
 
@@ -233,7 +226,7 @@ func LoginRegisterHandler(c *gin.Context) {
 		return
 	}
 	var user models.User
-	db.Debug().Preload("Likes").Preload("Dislikes").Where("username = ? AND password = ?", form.Username, form.Password).FirstOrCreate(&user, &models.User{Username: form.Username, Password: form.Password})
+	db.Preload("Likes").Preload("Dislikes").Where("username = ? AND password = ?", form.Username, form.Password).FirstOrCreate(&user, &models.User{Username: form.Username, Password: form.Password})
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid credentials"})
 		return

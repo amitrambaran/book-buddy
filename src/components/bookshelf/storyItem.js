@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 // BookItem Component
 // Displays singular book item on the bookshelf.
 export class storyItem extends Component {
+
   render() {
     return (
       // Direct to book.js page upon clicking the item. Appends book ID to the URL.
