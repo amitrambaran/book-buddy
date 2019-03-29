@@ -21,15 +21,13 @@ export default class Recommend extends Component {
   onGoSubmit(e) {
     e.preventDefault();
     this.setState({recommendations: []});
-    let mockdata = require('../../mock.json');
-    // let query = this.state.query.replace(/\s+/g, '+');
-    // let key = "127938-BookBudd-1BYV73T6";
-    // let baseUrl = "https://cors-anywhere.herokuapp.com/";
-    // let url = `https://tastedive.com/api/similar?q=${query}&type=books&info=1&k=${key}`
-    // fetch(baseUrl + url)
-    // .then((response) => {return response.json()})
-    // .then((data) => this.getBookDetails(data.Similar.Results));
-    this.getBookDetails(mockdata.Similar.Results);
+    let query = this.state.query.replace(/\s+/g, '+');
+    let key = "127938-BookBudd-1BYV73T6";
+    let baseUrl = "https://cors-anywhere.herokuapp.com/";
+    let url = `https://tastedive.com/api/similar?q=${query}&type=books&info=1&k=${key}`
+    fetch(baseUrl + url)
+    .then((response) => {return response.json()})
+    .then((data) => this.getBookDetails(data.Similar.Results));
   }
 
   contains(book, list){
@@ -67,7 +65,7 @@ export default class Recommend extends Component {
     return (
       <React.Fragment>
         <h1>User Recommendations</h1>
-        <Form inline>
+        <Form inline style={{justifyContent: 'center'}}>
           <FormControl
             type="text"
             placeholder="Find recommendations for..."

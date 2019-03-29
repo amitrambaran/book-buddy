@@ -6,7 +6,7 @@ import './App.css';
 
 /* Page Routes */
 import About from './components/pages/about';
-import Book from './components/pages/book';
+import Story from './components/pages/story';
 import Homepage from './components/pages/homepage';
 import Library from './components/pages/library';
 import Login from './components/pages/login';
@@ -48,9 +48,9 @@ class App extends Component {
           )} />
           
           {/* Route for Book Details page */}
-          <Route path="/book" render={props => (
+          <Route path="/story" render={props => (
             <React.Fragment>
-              <Book />
+              <Story />
             </React.Fragment>
           )} />
 

@@ -43,13 +43,13 @@ func init() {
 	}
 	db.Set("gorm:auto_preload", true)
 
-	db.Debug().DropTableIfExists(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
+	// db.Debug().DropTableIfExists(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
 
 	db.Debug().AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
-	// db.Model(&models.Story{}).AddForeignKey("username", "users(username)", "CASCADE", "CASCADE")
 	// db.Model(&models.Story{}).AddForeignKey("story_id", "stories(id)", "CASCADE", "CASCADE")
 
-	// db.Model(&models.Review{}).AddForeignKey("username", "users(username)", "CASCADE", "CASCADE")
+	// db.Model(&models.Story{}).AddForeignKey("author_username", "users(username)", "CASCADE", "CASCADE")
+	// db.Model(&models.Review{}).AddForeignKey("reviewer", "users(username)", "CASCADE", "CASCADE")
 }
 
 func main() {
@@ -68,9 +68,38 @@ func main() {
 		api.POST("/dislike/:id", DislikeBookHandler)
 		api.GET("/username/:id", GetUserNameHandler)
 		api.POST("/login", LoginRegisterHandler)
+		api.POST("/story", AddStoryHandler)
+		api.GET("/story/:id", GetStoryHandler)
+		api.GET("/stories/:n", GetStoriesHandler)
+		api.GET("/userstories/:username", GetUserStoriesHandler)
+		api.GET("/newstories/:n", GetStoriesHandler)
+		api.POST("/review/:id", AddReviewHandler)
 	}
 
 	router.Run(":8080")
+}
+
+func AddReviewHandler(c *gin.Context) {
+	var err error
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid story id"})
+		return
+	}
+	form := new(models.ReviewForm)
+	err = c.BindJSON(form)
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid review form"})
+		return
+	}
+	story := new(models.Story)
+	db.Where("id = ?", id).Find(story)
+	if story.ID == 0 {
+		c.JSON(404, gin.H{"message": "Invalid Story"})
+		return
+	}
+	db.Model(story).Association("Reviews").Append(&models.Review{Comment: form.Comment, Reviewer: form.Reviewer, Score: form.Score})
+	c.Status(200)
 }
 
 func GetUserNameHandler(c *gin.Context) {
@@ -86,6 +115,68 @@ func GetUserNameHandler(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{"username": user.Username})
+}
+
+func GetUserStoriesHandler(c *gin.Context) {
+	username := c.Param("username")
+	var stories []*models.Story
+	db.Debug().Preload("Reviews").Where("author = ?", username).Find(&stories)
+	c.JSON(200, gin.H{"stories": stories})
+}
+
+func GetNewStoriesHandler(c *gin.Context) {
+	n, err := strconv.Atoi(c.Param("n"))
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid quantity amount"})
+		return
+	}
+	if n > 10 {
+		n = 10
+	}
+	var stories []*models.Story
+	db.Debug().Preload("Reviews").Order("updated_at desc").Limit(n).Find(&stories)
+	c.JSON(200, gin.H{"stories": stories})
+}
+
+func GetStoriesHandler(c *gin.Context) {
+	n, err := strconv.Atoi(c.Param("n"))
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid quantity amount"})
+		return
+	}
+	if n > 10 {
+		n = 10
+	}
+	var stories []*models.Story
+	db.Debug().Preload("Reviews").Order(gorm.Expr("random()")).Limit(n).Find(&stories)
+	c.JSON(200, gin.H{"stories": stories})
+}
+
+func GetStoryHandler(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid Story id"})
+		return
+	}
+	var story models.Story
+	db.Debug().Preload("Reviews").Where("id = ?", id).First(&story)
+	if story.ID == 0 {
+		c.JSON(404, gin.H{"message": "Invalid Story ID"})
+		return
+	}
+	c.JSON(200, gin.H{"story": story})
+}
+
+func AddStoryHandler(c *gin.Context) {
+	form := new(models.StoryForm)
+	err := c.BindJSON(form)
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid story form"})
+		return
+	}
+	var story models.Story
+	db.Debug().Preload("Reviews").Where("title = ? AND author = ?", form.Title, form.Author).FirstOrCreate(&story, &models.Story{Author: form.Author, Title: form.Title, Content: form.Content})
+	c.JSON(200, gin.H{"story": story})
 }
 
 func DislikeBookHandler(c *gin.Context) {
