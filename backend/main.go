@@ -67,7 +67,7 @@ func main() {
 		api.POST("/review/:id", AddReviewHandler)
 	}
 
-	router.Run(":8080")
+	router.Run(":3000")
 }
 
 func AddReviewHandler(c *gin.Context) {
