@@ -15,10 +15,15 @@ services:
     build:
       context: ./backend
     ports:
-      - 8080:8080
+      - 3000:3000
     depends_on:
       - db
       - redis
+  web:
+    build:
+      context: .
+    ports:
+      - 8080:80
 
 volumes:
   database_data:

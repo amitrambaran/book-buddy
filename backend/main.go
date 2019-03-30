@@ -5,7 +5,6 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 
 	"fmt"
@@ -49,7 +48,6 @@ func main() {
 
 	router.Use(cors.Default())
 
-	router.Use(static.Serve("/", static.LocalFile("../build", true)))
 	api := router.Group("/api")
 	{
 		api.GET("/", func(c *gin.Context) {
