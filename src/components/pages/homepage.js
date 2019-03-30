@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import StoryItem from  '../bookshelf/storyItem';
+import apiURL from '../../api';
 
 export class homepage extends Component {
   componentWillMount(){
@@ -8,7 +9,7 @@ export class homepage extends Component {
   }
 
   getRandomStories(n){
-    fetch('http://localhost:8080/api/stories/10')
+    fetch(`${apiURL}/api/stories/10`)
       .then((response) => {
         switch (response.status) {
           case 200:
@@ -23,7 +24,7 @@ export class homepage extends Component {
   }
 
   getNewStories(n){
-    fetch('http://localhost:8080/api/newstories/10')
+    fetch(`${apiURL}/api/newstories/10`)
       .then((response) => {
         switch (response.status) {
           case 200:

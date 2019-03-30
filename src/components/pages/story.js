@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Review from '../review/review';
 import AddReview from '../review/addreview';
+import apiURL from '../../api';
 
 class Story extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Story extends Component {
   componentDidMount() {
     let error = false;
     const id = window.location.pathname.split('/')[2]
-    const url = `http://localhost:8080/api/story/${id}`
+    const url = `${apiURL}/api/story/${id}`
     fetch(url)
       .then((response) => {
         switch (response.status) {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Book from '../bookshelf/book';
 import StoryItem from '../bookshelf/storyItem'
+import apiURL from '../../api';
 
 class Library extends Component {
   componentWillMount() {
@@ -11,7 +12,7 @@ class Library extends Component {
   }
 
   getUserStories(username) {
-    fetch(`http://localhost:8080/api/userstories/${username}`)
+    fetch(`${apiURL}/api/userstories/${username}`)
       .then((response) => {
         switch (response.status) {
           case 200:

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { likeBook, dislikeBook } from '../../actions/index';
+import apiURL from '../../api'
 
 class Book extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Book extends Component {
   onPlusClick(e) {
     e.preventDefault();
     let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
-    fetch(`http://localhost:8080/api/like/${this.props.userID}`, {
+    fetch(`${apiURL}/api/like/${this.props.userID}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bookToAdd)
@@ -36,7 +37,7 @@ class Book extends Component {
   onMinusClick(e) {
     e.preventDefault();
     let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
-    fetch(`http://localhost:8080/api/dislike/${this.props.userID}`, {
+    fetch(`${apiURL}/api/dislike/${this.props.userID}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bookToAdd)
