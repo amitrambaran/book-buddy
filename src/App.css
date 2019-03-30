@@ -14,7 +14,7 @@ html, body, .App, #root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  font-size: 20px;
+  font-size: 200px;
 }
 
 .App {
