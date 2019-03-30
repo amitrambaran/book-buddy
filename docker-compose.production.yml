@@ -5,15 +5,9 @@ services:
       context: ./backend
     ports:
       - 3000:3000
-    depends_on:
-      - db
-      - redis
+
   web:
     build:
       context: .
     ports:
       - 8080:80
-
-volumes:
-  database_data:
-    driver: local
