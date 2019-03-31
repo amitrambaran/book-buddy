@@ -17,6 +17,7 @@ type StoryForm struct {
 type BookForm struct {
 	ISBN  string `json:"ISBN" binding:"required"`
 	Title string `json:"title" binding:"required"`
+	Cover string `json:"cover" binding:"required"`
 }
 
 type UserForm struct {
@@ -36,6 +37,7 @@ type Book struct {
 	ISBN        string `json:"ISBN" binding:"required" gorm:"unique_index"`
 	Title       string `json:"title" binding:"required"`
 	Description string `json:"description" binding:"required"`
+	Cover       string `json:"cover" binding:"required"`
 }
 
 type Story struct {

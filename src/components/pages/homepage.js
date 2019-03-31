@@ -60,7 +60,7 @@ export class homepage extends Component {
               <hr></hr>
               <div className="book-container">
                 {this.state && this.state.newStories && this.state.newStories.map(story => (
-                  <StoryItem key={story} story={story}/>
+                  <StoryItem key={`new-${story.author}-${story.title}`} story={story}/>
                 )
                 )}
               </div>
@@ -73,7 +73,7 @@ export class homepage extends Component {
               <hr></hr>
               <div className="book-container">
                 {this.state && this.state.randStories && this.state.randStories.map(story => (
-                  <StoryItem key={story} story={story}/>
+                  <StoryItem key={`random-${story.author}-${story.title}`} story={story}/>
                 )
                 )}
               </div>

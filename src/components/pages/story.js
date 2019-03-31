@@ -75,7 +75,7 @@ class Story extends Component {
             <hr></hr>
             {this.state.story.reviews.map(review => (
               <div className="main-panel-container">
-                <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
+                <Review key={review.reviewer} reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
               </div>
             ))}
             {
