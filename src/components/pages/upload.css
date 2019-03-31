@@ -1,0 +1,28 @@
+.storyHeader {
+    float: left; 
+  }
+  
+  .bigBreak {
+    width: 100%; 
+    height: 50px;
+  }
+  
+  .inputfield {
+    float: left; 
+    width: 35%;
+    padding: 8px;
+  }
+  
+  .storyButton {
+    background-color: #17a2b8;
+    border-radius: 8px;
+    width: 25%;
+    border: none;
+    padding: 4px;
+  }
+
+  @media (max-width:1000px) {
+    .storyButton {
+        width: 50%;
+    }
+  }
