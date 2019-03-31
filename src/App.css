@@ -56,7 +56,7 @@ a:hover {
   background-color: white;
   width: 100%;
   padding: 15px;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 }
 
 .main-panel-container header {
@@ -74,11 +74,35 @@ a:hover {
 .book-container {
   display: flex;
   flex-flow: wrap;
-  margin: 0 auto;
-  justify-content: space-between;
+  width: 100%;
 }
 
 .book-panel {
-  margin: 10px;
   height: 100%;
+  width: 25%;
+}
+
+.book-panel > div {
+  margin: 10px;
+}
+
+@media all and (max-width: 1199px) {
+  .book-panel {
+    width: 25%;
+  }
+}
+@media all and (max-width: 991px) {
+  .book-panel {
+    width: 33%;
+  }
+}
+@media all and (max-width: 768px) {
+  .book-panel {
+    width: 50%;
+  }
+}
+@media all and (max-width: 480px) {
+  .book-panel {
+    width: 100%;
+  }
 }

@@ -53,28 +53,38 @@ export default class AddReview extends Component {
 
   render() {
     return (
-      <div style={{maxWidth: '40em', margin: '0 auto'}}>
+      <React.Fragment>
+        <Form inline style={{ alignItems: "baseline", display: "flex", justifyContent: 'center' }} onSubmit={this.onGoSubmit}>
           <h6>{this.state.error}</h6>
-          <FormControl as='textarea' value={this.state.comment} onChange={this.onCommentChange}/>
-          <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1em'}}>
-            <Form.Control
-              style={{width: '75px', marginRight: '1em'}}
-              as="select" value={this.state.score}
-              onChange={this.onScoreChange}
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </Form.Control>
+          <FormControl
+            as="textarea"
+            rows="2"
+            placeholder="Enter a comment..."
+            value={ this.state.comment }
+            onChange={ this.onCommentChange }
+            style={{ resize: "none", marginRight: "10px" , width: "50%", height: "100px"}}
+          />
+          <div style={{ display: "flex", flexFlow: "wrap" }}>
             <Button
-              variant={this.state.comment.length ? 'primary' : 'secondary' }
-              disabled={!this.state.comment.length}
-              onClick={this.sendReview}
-            >Add</Button>
+              variant="info"
+              disabled={ this.state.disabled }
+              onClick={ this.sendReview }
+              style={{ marginRight: "50%", marginBottom: "6px"}}
+            >Post</Button>
+            <Form.Control
+              as="select"
+              value={ this.state.score }
+              onChange={ this.onScoreChange }
+            >
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </Form.Control>
           </div>
-      </div>
+        </Form>
+      </React.Fragment>
     )
   }
 }

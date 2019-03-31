@@ -74,7 +74,9 @@ class Story extends Component {
             <p>Content: {this.state.story.content}</p>
             <hr></hr>
             {this.state.story.reviews.map(review => (
-              <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
+              <div className="main-panel-container">
+                <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
+              </div>
             ))}
             {
               this.props.user && this.props.user.username !== this.state.story.author &&
