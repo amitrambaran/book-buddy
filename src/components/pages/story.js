@@ -45,9 +45,12 @@ class Story extends Component {
           <h4>Story is loading</h4> :
           <div>
             <h1>{ this.state.story.title }</h1>
-            <p>Author: {this.state.story.author}</p>
+            <h5>Author: {this.state.story.author}</h5>
+            <hr></hr>
             {/* <p>Rating: { this.state.book.rating }</p> */}
             <div className="main-panel-container">
+              <header>Content</header>
+              <hr></hr>
               { this.state.story.content }
             </div>
             <hr></hr>
