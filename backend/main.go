@@ -40,7 +40,7 @@ func init() {
 		fmt.Print(err)
 	}
 	db.Debug().Set("gorm:auto_preload", true)
-	// gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.ReleaseMode)
 
 	db.Debug().AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
 }
@@ -210,7 +210,7 @@ func DislikeBookHandler(c *gin.Context) {
 		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
-	db.Debug().Model(user).Association("Disikes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title})
+	db.Debug().Model(user).Association("Disikes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title, Cover: form.Cover})
 	c.Status(200)
 }
 
@@ -234,7 +234,7 @@ func LikeBookHandler(c *gin.Context) {
 		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
-	db.Debug().Model(user).Association("Likes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title})
+	db.Debug().Model(user).Association("Likes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title, Cover: form.Cover})
 	c.Status(200)
 }
 
