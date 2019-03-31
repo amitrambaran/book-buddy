@@ -61,13 +61,14 @@ class LoginPage extends Component {
     .then((data) => {
       if (error) {
         console.log(data)
-        this.setState({error: data.message });
+        this.setState({error: "Incorrect Username/Password" });
         console.log(this.state)
       } else {
         data.user.dislikes = (data.user.dislikes) ? data.user.dislikes : [];
         data.user.likes = (data.user.likes) ? data.user.likes : [];
         this.props.login( data.user );
-        this.setState({error: '' });
+        this.setState({error: ''});
+        window.location = '/';
       }
     })
   }
@@ -76,11 +77,9 @@ class LoginPage extends Component {
     return (
       <React.Fragment>
         <div className="main-login-container">
-
-          <div className="side-panel">B<span style={{ color: '#17a2b8' }}>B</span></div>
-
+          <h1><div className="side-panel">B<span style={{ color: '#17a2b8' }}>B</span></div></h1>
           <div className="login-container">
-            <header>Login/Register</header>
+            <h4>Login/Register</h4>
             <hr></hr>
             <Form onSubmit={(e) => this.loginSubmit(e)} style={{maxWidth: '40em', margin: '0 auto'}}>
             <h4>{this.state.error}</h4>
@@ -88,7 +87,7 @@ class LoginPage extends Component {
               <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter username"
+                placeholder="Username"
                 value={this.state.username}
                 onChange={this.usernameChange}
               />
