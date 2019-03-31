@@ -79,11 +79,16 @@ class Story extends Component {
               { this.state.story.content }
             </div>
             <hr></hr>
-            {this.state.story.reviews.map(review => (
-              <div className="main-panel-container">
-                <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
-              </div>
-            ))}
+            <div className="main-panel-container">
+              <header>User Reviews</header>
+              {this.state.story.reviews.map(review => (
+                <div>
+                  <hr></hr>
+                  <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
+                </div>
+              ))}
+            </div>
+            <br/>
             {
               this.props.user && this.props.user.username !== this.state.story.author &&
               !this.alreadyReviewed(this.state.story.reviews, this.props.user.username) &&
