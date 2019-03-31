@@ -16,7 +16,6 @@ export class storyItem extends Component {
         style={{ textDecoration: 'none', color: 'black' }}
       >
         <Card style={{ maxWidth: '250px' }} className="book-panel">
-          {/* <Card.Img src={`http://covers.openlibrary.org/b/isbn/${this.props.isbn}-L.jpg`} /> */}
           <Card.Header style={{ fontSize: '100px', color: 'white', backgroundColor: '#343a40'}}>{ this.props.story.title.substring(0, 1) }</Card.Header>
           <Card.Body>
             <Card.Title>{ this.props.story.title }</Card.Title>

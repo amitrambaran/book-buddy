@@ -73,7 +73,9 @@ a:hover {
 
 .book-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: wrap;
+  margin: 0 auto;
+  justify-content: space-between;
 }
 
 .book-panel {
