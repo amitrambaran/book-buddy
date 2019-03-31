@@ -58,7 +58,7 @@ export class homepage extends Component {
             <div className="main-panel-container">
               <header>New Stories</header>
               <hr></hr>
-              <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+              <div className="book-container">
                 {this.state && this.state.newStories && this.state.newStories.map(story => (
                   <StoryItem key={story} story={story}/>
                 )
@@ -71,7 +71,7 @@ export class homepage extends Component {
             <div className="main-panel-container">
               <header>Random Stories</header>
               <hr></hr>
-              <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+              <div className="book-container">
                 {this.state && this.state.randStories && this.state.randStories.map(story => (
                   <StoryItem key={story} story={story}/>
                 )

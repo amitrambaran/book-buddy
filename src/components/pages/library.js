@@ -56,7 +56,7 @@ class Library extends Component {
         <div className="main-panel-container">
           <header>Your Uploads</header>
           <hr></hr>
-          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <div className="book-container">
             {this.state && this.state.userStories && this.state.userStories.map(story => (
               <StoryItem key={story} story={story} />
             )
