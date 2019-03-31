@@ -68,3 +68,13 @@ a:hover {
   margin: 10px 0px;
   background-image: linear-gradient(to right, rgba(200, 200, 200, 0.75), rgba(200, 200, 200, 0.3), rgba(200, 200, 200, 0));
 }
+
+.book-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book-panel {
+  margin: 10px;
+  height: 100%;
+}

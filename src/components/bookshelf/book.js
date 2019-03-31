@@ -58,7 +58,7 @@ class Book extends Component {
   render() {
 
     return (
-      <Card style={{ maxWidth: '20em' }}>
+      <Card style={{ maxWidth: '250px' }} className="book-panel">
         <Card.Img src={`http://covers.openlibrary.org/b/isbn/${this.props.isbn}-L.jpg`} />
         {this.props.likeable && 
           <div>
@@ -74,10 +74,10 @@ class Book extends Component {
             >-</Button>
           </div>
         }
-        <Card.Body  >
+        <Card.Body>
           <Card.Title>{this.props.title}</Card.Title>
-          <Card.Text style={{ fontSize: '0.8em' }}>
-            {this.props.description}
+          <Card.Text style={{ fontSize: '0.7em' }}>
+            {this.props.description.substring(0, 200)}
           </Card.Text>
         </Card.Body>
       </Card>
