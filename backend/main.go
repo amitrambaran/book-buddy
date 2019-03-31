@@ -40,7 +40,7 @@ func init() {
 		fmt.Print(err)
 	}
 	db.Debug().Set("gorm:auto_preload", true)
-	gin.SetMode(gin.ReleaseMode)
+	// gin.SetMode(gin.ReleaseMode)
 
 	db.Debug().AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
 }
