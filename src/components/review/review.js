@@ -6,8 +6,8 @@ export default class Review extends Component {
     return (
       <div>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <h6>{this.props.reviewer}</h6>
-          <h6>{this.props.score}/5</h6>
+          <h6>User: {this.props.reviewer}</h6>
+          <h6>Rating: {this.props.score}/5</h6>
         </div>
         {this.props.comment}
       </div>

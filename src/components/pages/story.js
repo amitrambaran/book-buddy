@@ -64,25 +64,20 @@ class Story extends Component {
         {(!this.state.story) ?
           <h4>Story is loading</h4> :
           <div>
-<<<<<<< HEAD
-            <h1>{ this.state.story.title }</h1>
-            <h5>Author: {this.state.story.author}</h5>
-            <hr></hr>
-            {/* <p>Rating: { this.state.book.rating }</p> */}
+            <h1>{this.state.story.title}</h1>
+            <br/>
+            <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+              <h5>By: <b>{this.state.story.author}</b></h5>
+              {
+                this.state.story.score !== 0 && <h5>Average Rating: { this.state.story.score } / 5</h5>
+              }
+            </div>
+            <br/>
             <div className="main-panel-container">
               <header>Content</header>
               <hr></hr>
               { this.state.story.content }
-=======
-            <h2>{this.state.story.title}</h2>
-            <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
-              <p>By: <b>{this.state.story.author}</b></p>
-              {
-                this.state.story.score !== 0 && <p>Average Rating: { this.state.story.score } / 5</p>
-              }
->>>>>>> 0f6b61e28107db7b06b2aa0562c9be8c927c32da
             </div>
-            <p>Content: {this.state.story.content}</p>
             <hr></hr>
             {this.state.story.reviews.map(review => (
               <div className="main-panel-container">
@@ -92,7 +87,7 @@ class Story extends Component {
             {
               this.props.user && this.props.user.username !== this.state.story.author &&
               !this.alreadyReviewed(this.state.story.reviews, this.props.user.username) &&
-            <AddReview username={this.props.user.username} storyID={this.state.story.id}/>
+              <AddReview username={this.props.user.username} storyID={this.state.story.id}/>
             }
           </div>
         }
