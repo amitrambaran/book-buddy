@@ -62,12 +62,12 @@ class LoginPage extends Component {
       if (error) {
         console.log(data)
         this.setState({error: data.message });
-        console.log(this.state)
       } else {
         data.user.dislikes = (data.user.dislikes) ? data.user.dislikes : [];
         data.user.likes = (data.user.likes) ? data.user.likes : [];
         this.props.login( data.user );
         this.setState({error: '' });
+        this.props.history.push('/');
       }
     })
   }
