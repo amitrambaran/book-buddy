@@ -54,9 +54,7 @@ class Book extends Component {
     this.setState({ disabled: true })
   }
 
-
   render() {
-
     return (
       <Card style={{ maxWidth: '250px' }} className="book-panel">
         <Card.Img src={`http://covers.openlibrary.org/b/isbn/${this.props.isbn}-L.jpg`} />
@@ -76,7 +74,7 @@ class Book extends Component {
         }
         <Card.Body>
           <Card.Title>{this.props.title}</Card.Title>
-          <Card.Text style={{ fontSize: '0.7em' }}>
+          <Card.Text style={{ fontSize: '14px', margin: '0px' }}>
             {this.props.description.substring(0, 200)}
           </Card.Text>
         </Card.Body>
@@ -91,4 +89,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(null, mapDispatchToProps)(Book);
-
