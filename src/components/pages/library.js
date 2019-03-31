@@ -12,7 +12,12 @@ class Library extends Component {
   }
 
   getUserStories(username) {
-    fetch(`${apiURL}/api/userstories/${username}`)
+    fetch(`${apiURL}/api/userstories/${username}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
       .then((response) => {
         switch (response.status) {
           case 200:

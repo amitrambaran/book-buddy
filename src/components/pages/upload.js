@@ -19,7 +19,10 @@ class Upload extends Component {
     let error = false;
     fetch(`${apiURL}/api/story`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         author: this.props.author.username,
         title: this.state.title,

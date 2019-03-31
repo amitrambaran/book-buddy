@@ -29,7 +29,10 @@ export default class AddReview extends Component {
     console.log(`${this.props.username} ${this.props.storyID} ${this.state.comment} ${this.state.score}`)
     fetch(`${apiURL}/api/review/${this.props.storyID}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         comment: this.state.comment,
         score: this.state.score,

@@ -41,7 +41,11 @@ export default class RecommendationBar extends Component {
 
   addBookDetails(book){
     fetch(`https://openlibrary.org/search.json?title=${book.Name.replace(/\s+/g,'+')}`, {
-      method: 'GET'
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
     }).then((response) => {
       return response.json();
     }).then((data) => {
