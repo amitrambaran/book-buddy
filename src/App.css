@@ -7,19 +7,20 @@
 
 /* Take up entire screen */
 html, body, .App, #root {
-  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  
+  height: auto;
+  background-color: #e6e6e6;
   font-size: 20px;
 }
 
 .App {
   text-align: center;
-  background-color: rgb(230, 230, 230);
+  
 }
 
 a {
@@ -55,6 +56,7 @@ a:hover {
   background-color: white;
   width: 100%;
   padding: 15px;
+  padding-bottom: 40px;
 }
 
 .main-panel-container header {
@@ -67,4 +69,14 @@ a:hover {
   height: 2px;
   margin: 10px 0px;
   background-image: linear-gradient(to right, rgba(200, 200, 200, 0.75), rgba(200, 200, 200, 0.3), rgba(200, 200, 200, 0));
+}
+
+.book-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book-panel {
+  margin: 10px;
+  height: 100%;
 }
