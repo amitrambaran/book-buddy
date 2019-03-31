@@ -32,10 +32,30 @@ class Story extends Component {
       }).then((data) => {
         if (!error) {
           data.story.reviews = (data.story.reviews) ? data.story.reviews : [];
+          data.story.score = this.getAverageScore(data.story.reviews);
+          data.story.id = id;
           this.setState({ story: data.story })
         }
-        console.log(data);
       })
+  }
+
+  getAverageScore(reviews){
+    let sum = 0
+    reviews.forEach(review => {
+      sum += review.score
+    });
+    return (sum) ? (sum / reviews.length): sum;
+  }
+
+  alreadyReviewed(reviews, username){
+    let reviewed = false;
+    reviews.forEach(review => {
+      console.log(review.reviewer === username)
+      if(review.reviewer === username){
+        reviewed = true;
+      }
+    });
+    return reviewed;
   }
 
   render() {
@@ -44,6 +64,7 @@ class Story extends Component {
         {(!this.state.story) ?
           <h4>Story is loading</h4> :
           <div>
+<<<<<<< HEAD
             <h1>{ this.state.story.title }</h1>
             <h5>Author: {this.state.story.author}</h5>
             <hr></hr>
@@ -52,16 +73,27 @@ class Story extends Component {
               <header>Content</header>
               <hr></hr>
               { this.state.story.content }
+=======
+            <h2>{this.state.story.title}</h2>
+            <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+              <p>By: <b>{this.state.story.author}</b></p>
+              {
+                this.state.story.score !== 0 && <p>Average Rating: { this.state.story.score } / 5</p>
+              }
+>>>>>>> 0f6b61e28107db7b06b2aa0562c9be8c927c32da
             </div>
+            <p>Content: {this.state.story.content}</p>
             <hr></hr>
-            {this.props.user && this.props.user.username !== this.state.story.author &&
-              <AddReview username={this.props.user.username} storyID={this.state.story.id}/>
-            }
             {this.state.story.reviews.map(review => (
               <div className="main-panel-container">
                 <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
               </div>
             ))}
+            {
+              this.props.user && this.props.user.username !== this.state.story.author &&
+              !this.alreadyReviewed(this.state.story.reviews, this.props.user.username) &&
+            <AddReview username={this.props.user.username} storyID={this.state.story.id}/>
+            }
           </div>
         }
       </React.Fragment>

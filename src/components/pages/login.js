@@ -22,7 +22,7 @@ class LoginPage extends Component {
   usernameChange(e) {
     e.preventDefault()
     this.setState({
-      username: e.target.value,
+      username: e.target.value.replace(/[\s;:]+/g, ''),
       error: ''
     })
   }
@@ -30,7 +30,7 @@ class LoginPage extends Component {
   passwordChange(e) {
     e.preventDefault()
     this.setState({
-      password: e.target.value,
+      password: e.target.value.replace(/[\s;:]+/g, ''),
       error: ''
     })
   }
@@ -67,8 +67,8 @@ class LoginPage extends Component {
         data.user.dislikes = (data.user.dislikes) ? data.user.dislikes : [];
         data.user.likes = (data.user.likes) ? data.user.likes : [];
         this.props.login( data.user );
-        this.setState({error: ''});
-        window.location = '/';
+        this.setState({error: '' });
+        this.props.history.push('/');
       }
     })
   }
@@ -83,6 +83,9 @@ class LoginPage extends Component {
             <hr></hr>
             <Form onSubmit={(e) => this.loginSubmit(e)} style={{maxWidth: '40em', margin: '0 auto'}}>
             <h4>{this.state.error}</h4>
+            <p style={{fontSize: '0.8em'}}>
+              <b>Username/Password cannot contain spaces, colons or semicolons</b>
+            </p>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Username</Form.Label>
               <Form.Control
@@ -101,7 +104,13 @@ class LoginPage extends Component {
                 onChange={this.passwordChange}
               />
             </Form.Group>
-            <Button variant="info" type="submit">Submit</Button>
+            <Button
+              variant="info"
+              type="submit"
+              disabled={!this.state.password.length || !this.state.username.length}
+            >
+              Submit
+            </Button>
           </Form>
           </div>
         </div>

@@ -56,7 +56,7 @@ export default class Recommend extends Component {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      let bookToRecommend = {'ISBN': data.docs[0].isbn[0], 'title': book.Name, 'description': book.wTeaser};
+      let bookToRecommend = {'ISBN': data.docs[0].isbn[0], 'title': book.Name, 'description': book.wTeaser, 'cover': data.docs[0].cover_i};
       if (!this.contains(bookToRecommend, this.props.user.likes) &&
        !this.contains(bookToRecommend, this.props.user.dislikes)) {
          this.setState(prevState => ({
@@ -83,7 +83,15 @@ export default class Recommend extends Component {
           {this.state.recommendations.length > 0 &&
             <div className="main-panel-container book-container">
               {this.state.recommendations.map(book => (
-                <Book key={book.isbn} likeable userID={this.props.user.ID} isbn={book.ISBN} title={book.title} description={book.description}/>
+                <Book
+                  key={book.isbn}
+                  likeable
+                  userID={this.props.user.ID}
+                  isbn={book.ISBN}
+                  title={book.title}
+                  description={book.description}
+                  cover={book.cover}
+                />
               ))}
             </div>
           }
