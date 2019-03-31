@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Book from '../bookshelf/book';
 import StoryItem from '../bookshelf/storyItem'
+import apiURL from '../../api';
 
 class Library extends Component {
   componentWillMount() {
@@ -11,7 +12,12 @@ class Library extends Component {
   }
 
   getUserStories(username) {
-    fetch(`http://localhost:8080/api/userstories/${username}`)
+    fetch(`${apiURL}/api/userstories/${username}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
       .then((response) => {
         switch (response.status) {
           case 200:
@@ -35,12 +41,13 @@ class Library extends Component {
         <div className="main-panel-container">
           <header>Liked Books</header>
           <hr></hr>
-          <div>
+          <div className="book-container">
             {(this.props.currentuser && this.props.currentuser.likes.length &&
               this.props.currentuser.likes.map(book => (
-                <Book key={book.isbn} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
+                <Book key={book.ISBN} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
               ))
-            ) || <h6>You have no Books</h6>}
+              ) || <h6>You have no Books</h6>
+            }
           </div>
         </div>
 
@@ -49,9 +56,9 @@ class Library extends Component {
         <div className="main-panel-container">
           <header>Your Uploads</header>
           <hr></hr>
-          <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <div className="book-container">
             {this.state && this.state.userStories && this.state.userStories.map(story => (
-              <StoryItem story={story} />
+              <StoryItem key={story} story={story} />
             )
             )}
           </div>

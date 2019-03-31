@@ -72,6 +72,7 @@ class App extends Component {
             </React.Fragment>
           )} />
           </div>
+          <br/>
         </div>
       </Router>
     );

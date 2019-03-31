@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { likeBook, dislikeBook } from '../../actions/index';
+import apiURL from '../../api'
 
 class Book extends Component {
   constructor(props) {
@@ -16,9 +17,12 @@ class Book extends Component {
   onPlusClick(e) {
     e.preventDefault();
     let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
-    fetch(`http://localhost:8080/api/like/${this.props.userID}`, {
+    fetch(`${apiURL}/api/like/${this.props.userID}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(bookToAdd)
     }).then((response) => {
       switch (response.status) {
@@ -36,9 +40,12 @@ class Book extends Component {
   onMinusClick(e) {
     e.preventDefault();
     let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
-    fetch(`http://localhost:8080/api/dislike/${this.props.userID}`, {
+    fetch(`${apiURL}/api/dislike/${this.props.userID}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(bookToAdd)
     }).then((response) => {
       switch (response.status) {
@@ -53,11 +60,9 @@ class Book extends Component {
     this.setState({ disabled: true })
   }
 
-
   render() {
-
     return (
-      <Card style={{ maxWidth: '20em' }}>
+      <Card style={{ maxWidth: '250px' }} className="book-panel">
         <Card.Img src={`http://covers.openlibrary.org/b/isbn/${this.props.isbn}-L.jpg`} />
         {this.props.likeable && 
           <div>
@@ -73,10 +78,10 @@ class Book extends Component {
             >-</Button>
           </div>
         }
-        <Card.Body  >
+        <Card.Body>
           <Card.Title>{this.props.title}</Card.Title>
-          <Card.Text style={{ fontSize: '0.8em' }}>
-            {this.props.description}
+          <Card.Text style={{ fontSize: '14px', margin: '0px' }}>
+            {this.props.description.substring(0, 200)}
           </Card.Text>
         </Card.Body>
       </Card>
@@ -90,4 +95,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(null, mapDispatchToProps)(Book);
-

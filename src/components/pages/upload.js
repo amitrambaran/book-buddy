@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Marked from 'marked';
 import Markmirror from 'react-markmirror';
 import { connect } from 'react-redux';
+import apiURL from '../../api';
 
 class Upload extends Component {
   constructor(props) {
@@ -16,9 +17,12 @@ class Upload extends Component {
   save = (e) => {
     e.preventDefault();
     let error = false;
-    fetch('http://localhost:8080/api/story', {
+    fetch(`${apiURL}/api/story`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         author: this.props.author.username,
         title: this.state.title,

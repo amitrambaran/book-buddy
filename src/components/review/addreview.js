@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import apiURL from '../../api';
 
 export default class AddReview extends Component {
   constructor(props){
@@ -26,9 +27,12 @@ export default class AddReview extends Component {
   sendReview = (e) => {
     e.preventDefault();
     console.log(`${this.props.username} ${this.props.storyID} ${this.state.comment} ${this.state.score}`)
-    fetch(`http://localhost:8080/api/review/${this.props.storyID}`, {
+    fetch(`${apiURL}/api/review/${this.props.storyID}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         comment: this.state.comment,
         score: this.state.score,

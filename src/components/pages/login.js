@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/index';
 import { withRouter } from 'react-router-dom';
+import apiURL from '../../api';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -37,9 +38,12 @@ class LoginPage extends Component {
   loginSubmit(e) {
     e.preventDefault()
     let error = false;
-    fetch('http://localhost:8080/api/login', {
+    fetch(`${apiURL}/api/login`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password

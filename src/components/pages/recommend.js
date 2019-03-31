@@ -7,7 +7,8 @@ export default class Recommend extends Component {
     super(props);
     this.state = {
       query: '',
-      recommendations: []
+      recommendations: [],
+      isLoading: false
     }
     this.onQueryChange = this.onQueryChange.bind(this);
     this.onGoSubmit = this.onGoSubmit.bind(this);
@@ -20,13 +21,17 @@ export default class Recommend extends Component {
 
   onGoSubmit(e) {
     e.preventDefault();
+    this.isLoading = true;
     this.setState({recommendations: []});
     let query = this.state.query.replace(/\s+/g, '+');
     let key = "127938-BookBudd-1BYV73T6";
     let baseUrl = "https://cors-anywhere.herokuapp.com/";
     let url = `https://tastedive.com/api/similar?q=${query}&type=books&info=1&k=${key}`
     fetch(baseUrl + url)
-    .then((response) => {return response.json()})
+    .then((response) => {
+      this.isLoading = false;
+      return response.json();
+    })
     .then((data) => this.getBookDetails(data.Similar.Results));
   }
 
@@ -65,20 +70,30 @@ export default class Recommend extends Component {
     return (
       <React.Fragment>
         <h1>User Recommendations</h1>
-        <Form inline style={{justifyContent: 'center'}}>
+        <div className="break"></div>
+        <Form inline style={{ justifyContent: 'center' }} onSubmit={this.onGoSubmit}>
           <FormControl
             type="text"
             placeholder="Find recommendations for..."
             onKeyUp={this.onQueryChange}
             className="mr-sm-2"
           />
-          <Button variant="outline-info" onClick={this.onGoSubmit}>Go</Button>
-          <div style={{width: '80%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', flexFlow: 'wrap'}}>
-            {this.state.recommendations.map(book => (
-              <Book key={book.isbn} likeable userID={this.props.user.ID} isbn={book.ISBN} title={book.title} description={book.description}/>
-            ))}
-          </div>
+          <Button variant="info" onClick={this.onGoSubmit}>Go</Button>
+          <div className="break"></div>
+          {this.state.recommendations.length > 0 &&
+            <div className="main-panel-container book-container">
+              {this.state.recommendations.map(book => (
+                <Book key={book.isbn} likeable userID={this.props.user.ID} isbn={book.ISBN} title={book.title} description={book.description}/>
+              ))}
+            </div>
+          }
         </Form>
+
+        <div className="break"></div>
+
+        {this.isLoading &&
+          <h3>Loading...</h3>
+        }
       </React.Fragment>
     )
   }
