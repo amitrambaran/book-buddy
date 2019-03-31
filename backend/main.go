@@ -33,16 +33,16 @@ func init() {
 	dbHost := os.Getenv("DB_HOST")
 
 	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, username, dbName, password)
+	fmt.Println(dbUri)
 
 	db, err = gorm.Open("postgres", dbUri)
 	if err != nil {
 		fmt.Print(err)
 	}
-	db.Set("gorm:auto_preload", true)
+	db.Debug().Set("gorm:auto_preload", true)
 	gin.SetMode(gin.ReleaseMode)
 
-	db.AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
-	db.Close()
+	db.Debug().AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
 }
 
 func main() {
@@ -73,13 +73,13 @@ func main() {
 }
 
 func getDB() {
-	err = db.DB().Ping()
+	err = db.Debug().DB().Ping()
 	if err != nil {
 		db, err = gorm.Open("postgres", dbUri)
 		if err != nil {
 			fmt.Print(err)
 		}
-		defer db.Close()
+		defer db.Debug().Close()
 	}
 }
 
@@ -98,12 +98,12 @@ func AddReviewHandler(c *gin.Context) {
 		return
 	}
 	story := new(models.Story)
-	db.Where("id = ?", id).Find(story)
+	db.Debug().Where("id = ?", id).Find(story)
 	if story.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid Story"})
 		return
 	}
-	db.Model(story).Association("Reviews").Append(&models.Review{Comment: form.Comment, Reviewer: form.Reviewer, Score: form.Score})
+	db.Debug().Model(story).Association("Reviews").Append(&models.Review{Comment: form.Comment, Reviewer: form.Reviewer, Score: form.Score})
 	c.Status(200)
 }
 
@@ -115,7 +115,7 @@ func GetUserNameHandler(c *gin.Context) {
 		return
 	}
 	user := new(models.User)
-	db.Where("id=?", id).Find(&user)
+	db.Debug().Where("id=?", id).Find(&user)
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
@@ -127,7 +127,7 @@ func GetUserStoriesHandler(c *gin.Context) {
 	getDB()
 	username := c.Param("username")
 	var stories []*models.Story
-	db.Preload("Reviews").Where("author = ?", username).Find(&stories)
+	db.Debug().Preload("Reviews").Where("author = ?", username).Find(&stories)
 	c.JSON(200, gin.H{"stories": stories})
 }
 
@@ -142,7 +142,7 @@ func GetNewStoriesHandler(c *gin.Context) {
 		n = 10
 	}
 	var stories []*models.Story
-	db.Preload("Reviews").Order("updated_at desc").Limit(n).Find(&stories)
+	db.Debug().Preload("Reviews").Order("updated_at desc").Limit(n).Find(&stories)
 	c.JSON(200, gin.H{"stories": stories})
 }
 
@@ -157,7 +157,7 @@ func GetStoriesHandler(c *gin.Context) {
 		n = 10
 	}
 	var stories []*models.Story
-	db.Preload("Reviews").Order(gorm.Expr("random()")).Limit(n).Find(&stories)
+	db.Debug().Preload("Reviews").Order(gorm.Expr("random()")).Limit(n).Find(&stories)
 	c.JSON(200, gin.H{"stories": stories})
 }
 
@@ -169,7 +169,7 @@ func GetStoryHandler(c *gin.Context) {
 		return
 	}
 	var story models.Story
-	db.Preload("Reviews").Where("id = ?", id).First(&story)
+	db.Debug().Preload("Reviews").Where("id = ?", id).First(&story)
 	if story.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid Story ID"})
 		return
@@ -186,7 +186,7 @@ func AddStoryHandler(c *gin.Context) {
 		return
 	}
 	var story models.Story
-	db.Preload("Reviews").Where("title = ? AND author = ?", form.Title, form.Author).FirstOrCreate(&story, &models.Story{Author: form.Author, Title: form.Title, Content: form.Content})
+	db.Debug().Preload("Reviews").Where("title = ? AND author = ?", form.Title, form.Author).FirstOrCreate(&story, &models.Story{Author: form.Author, Title: form.Title, Content: form.Content})
 	c.JSON(200, gin.H{"story": story})
 }
 
@@ -205,12 +205,12 @@ func DislikeBookHandler(c *gin.Context) {
 		return
 	}
 	user := new(models.User)
-	db.Where("id=?", id).Find(user)
+	db.Debug().Where("id=?", id).Find(user)
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
-	db.Model(user).Association("Disikes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title})
+	db.Debug().Model(user).Association("Disikes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title})
 	c.Status(200)
 }
 
@@ -229,12 +229,12 @@ func LikeBookHandler(c *gin.Context) {
 		return
 	}
 	user := new(models.User)
-	db.Where("id=?", id).Find(user)
+	db.Debug().Where("id=?", id).Find(user)
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid user"})
 		return
 	}
-	db.Model(user).Association("Likes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title})
+	db.Debug().Model(user).Association("Likes").Append(&models.Book{ISBN: form.ISBN, Title: form.Title})
 	c.Status(200)
 }
 
@@ -247,7 +247,7 @@ func LoginRegisterHandler(c *gin.Context) {
 		return
 	}
 	var user models.User
-	db.Preload("Likes").Preload("Dislikes").Where("username = ? AND password = ?", form.Username, form.Password).FirstOrCreate(&user, &models.User{Username: form.Username, Password: form.Password})
+	db.Debug().Preload("Likes").Preload("Dislikes").Where("username = ? AND password = ?", form.Username, form.Password).FirstOrCreate(&user, &models.User{Username: form.Username, Password: form.Password})
 	if user.ID == 0 {
 		c.JSON(404, gin.H{"message": "Invalid credentials"})
 		return
