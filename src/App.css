@@ -33,6 +33,10 @@ a:hover {
   color: black;
 }
 
+.navbar {
+	box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -57,6 +61,7 @@ a:hover {
   width: 100%;
   padding: 15px;
   padding-bottom: 40px;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .main-panel-container header {
