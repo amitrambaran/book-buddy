@@ -16,7 +16,7 @@ class Book extends Component {
 
   onPlusClick(e) {
     e.preventDefault();
-    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
+    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description}
     fetch(`${apiURL}/api/like/${this.props.userID}`, {
       method: 'POST',
       headers: {
@@ -65,7 +65,7 @@ class Book extends Component {
       <div className="book-panel">
         <div>
           <Card>
-            <Card.Img src={`http://covers.openlibrary.org/b/isbn/${this.props.isbn}-L.jpg`} />
+            <Card.Img src={`http://covers.openlibrary.org/b/id/${this.props.cover}-L.jpg`} />
             {this.props.likeable &&
               <div>
                 <Button

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Button, Form, FormControl } from 'react-bootstrap';
 import apiURL from '../../api';
+import { Button, FormControl, Form } from 'react-bootstrap';
 
 export default class AddReview extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       comment: '',
       score: 5,
-      sent: false
+      sent: false,
+      error: ''
     }
     this.onCommentChange = this.onCommentChange.bind(this);
     this.sendReview = this.sendReview.bind(this);
@@ -17,17 +18,16 @@ export default class AddReview extends Component {
 
   onScoreChange = (e) => {
     e.preventDefault();
-    this.setState({ score: e.target.value})
+    this.setState({ score: e.target.value })
   }
 
   onCommentChange = (e) => {
     e.preventDefault();
-    this.setState({comment: e.target.value})
+    this.setState({ comment: e.target.value })
   }
 
   sendReview = (e) => {
     e.preventDefault();
-    console.log(`${this.props.username} ${this.props.storyID} ${this.state.comment} ${this.state.score}`)
     fetch(`${apiURL}/api/review/${this.props.storyID}`, {
       method: 'POST',
       headers: {
@@ -44,7 +44,7 @@ export default class AddReview extends Component {
         case 200:
           break;
         default:
-          console.log('Error');
+          this.setState({error: 'Error adding review'})
           break;
       }
       return;
@@ -54,7 +54,8 @@ export default class AddReview extends Component {
   render() {
     return (
       <React.Fragment>
-        <Form inline style={{ alignItems: "baseline", display: "flex" }} onSubmit={this.onGoSubmit}>
+        <Form inline style={{ alignItems: "baseline", display: "flex", justifyContent: 'center' }} onSubmit={this.onGoSubmit}>
+          <h6>{this.state.error}</h6>
           <FormControl
             as="textarea"
             rows="2"
