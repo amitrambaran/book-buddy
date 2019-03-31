@@ -7,19 +7,20 @@
 
 /* Take up entire screen */
 html, body, .App, #root {
-  height: auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  
+  height: auto;
+  background-color: #e6e6e6;
   font-size: 20px;
 }
 
 .App {
   text-align: center;
-  background-color: #e6e6e6;
+  
 }
 
 a {
