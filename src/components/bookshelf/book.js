@@ -56,7 +56,6 @@ class Book extends Component {
 
 
   render() {
-
     return (
       <Card style={{ maxWidth: '20em' }}>
         <Card.Img src={`http://covers.openlibrary.org/b/isbn/${this.props.isbn}-L.jpg`} />

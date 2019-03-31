@@ -39,7 +39,7 @@ class Library extends Component {
           <div>
             {(this.props.currentuser && this.props.currentuser.likes.length &&
               this.props.currentuser.likes.map(book => (
-                <Book key={book.isbn} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
+                <Book key={book} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
               ))
             ) || <h6>You have no Books</h6>}
           </div>
@@ -52,7 +52,7 @@ class Library extends Component {
           <hr></hr>
           <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
             {this.state && this.state.userStories && this.state.userStories.map(story => (
-              <StoryItem story={story} />
+              <StoryItem key={story} story={story} />
             )
             )}
           </div>
