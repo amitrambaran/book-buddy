@@ -12,7 +12,12 @@ class Library extends Component {
   }
 
   getUserStories(username) {
-    fetch(`${apiURL}/api/userstories/${username}`)
+    fetch(`${apiURL}/api/userstories/${username}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
       .then((response) => {
         switch (response.status) {
           case 200:
@@ -38,10 +43,11 @@ class Library extends Component {
           <hr></hr>
           <div className="book-container">
             {(this.props.currentuser && this.props.currentuser.likes.length &&
-            this.props.currentuser.likes.map(book => (
-              <Book key={book.ISBN} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
-            ))
-            ) || <h6>You have no Books</h6>}
+              this.props.currentuser.likes.map(book => (
+                <Book key={book.ISBN} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} />
+              ))
+              ) || <h6>You have no Books</h6>
+            }
           </div>
         </div>
 
@@ -52,7 +58,7 @@ class Library extends Component {
           <hr></hr>
           <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
             {this.state && this.state.userStories && this.state.userStories.map(story => (
-              <StoryItem story={story} />
+              <StoryItem key={story} story={story} />
             )
             )}
           </div>

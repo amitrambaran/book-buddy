@@ -19,7 +19,10 @@ class Book extends Component {
     let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
     fetch(`${apiURL}/api/like/${this.props.userID}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(bookToAdd)
     }).then((response) => {
       switch (response.status) {
@@ -39,7 +42,10 @@ class Book extends Component {
     let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
     fetch(`${apiURL}/api/dislike/${this.props.userID}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(bookToAdd)
     }).then((response) => {
       switch (response.status) {

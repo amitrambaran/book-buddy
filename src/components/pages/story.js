@@ -14,7 +14,12 @@ class Story extends Component {
     let error = false;
     const id = window.location.pathname.split('/')[2]
     const url = `${apiURL}/api/story/${id}`
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }    
+    })
       .then((response) => {
         switch (response.status) {
           case 200:

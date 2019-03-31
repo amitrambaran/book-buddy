@@ -18,6 +18,8 @@ import (
 )
 
 var db *gorm.DB
+var err error
+var dbUri string
 
 func init() {
 	e := godotenv.Load()
@@ -32,7 +34,6 @@ func init() {
 
 	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, username, dbName, password)
 
-	var err error
 	db, err = gorm.Open("postgres", dbUri)
 	if err != nil {
 		fmt.Print(err)
@@ -41,6 +42,7 @@ func init() {
 	gin.SetMode(gin.ReleaseMode)
 
 	db.AutoMigrate(&models.User{}, &models.Book{}, &models.Story{}, &models.Review{})
+	db.Close()
 }
 
 func main() {
@@ -70,7 +72,19 @@ func main() {
 	router.Run(":3000")
 }
 
+func getDB() {
+	err = db.DB().Ping()
+	if err != nil {
+		db, err = gorm.Open("postgres", dbUri)
+		if err != nil {
+			fmt.Print(err)
+		}
+		defer db.Close()
+	}
+}
+
 func AddReviewHandler(c *gin.Context) {
+	getDB()
 	var err error
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -94,6 +108,7 @@ func AddReviewHandler(c *gin.Context) {
 }
 
 func GetUserNameHandler(c *gin.Context) {
+	getDB()
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Invalid user id"})
@@ -109,6 +124,7 @@ func GetUserNameHandler(c *gin.Context) {
 }
 
 func GetUserStoriesHandler(c *gin.Context) {
+	getDB()
 	username := c.Param("username")
 	var stories []*models.Story
 	db.Preload("Reviews").Where("author = ?", username).Find(&stories)
@@ -116,6 +132,7 @@ func GetUserStoriesHandler(c *gin.Context) {
 }
 
 func GetNewStoriesHandler(c *gin.Context) {
+	getDB()
 	n, err := strconv.Atoi(c.Param("n"))
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Invalid quantity amount"})
@@ -130,6 +147,7 @@ func GetNewStoriesHandler(c *gin.Context) {
 }
 
 func GetStoriesHandler(c *gin.Context) {
+	getDB()
 	n, err := strconv.Atoi(c.Param("n"))
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Invalid quantity amount"})
@@ -144,6 +162,7 @@ func GetStoriesHandler(c *gin.Context) {
 }
 
 func GetStoryHandler(c *gin.Context) {
+	getDB()
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Invalid Story id"})
@@ -159,6 +178,7 @@ func GetStoryHandler(c *gin.Context) {
 }
 
 func AddStoryHandler(c *gin.Context) {
+	getDB()
 	form := new(models.StoryForm)
 	err := c.BindJSON(form)
 	if err != nil {
@@ -171,6 +191,7 @@ func AddStoryHandler(c *gin.Context) {
 }
 
 func DislikeBookHandler(c *gin.Context) {
+	getDB()
 	var err error
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -194,6 +215,7 @@ func DislikeBookHandler(c *gin.Context) {
 }
 
 func LikeBookHandler(c *gin.Context) {
+	getDB()
 	var err error
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -217,6 +239,7 @@ func LikeBookHandler(c *gin.Context) {
 }
 
 func LoginRegisterHandler(c *gin.Context) {
+	getDB()
 	form := new(models.UserForm)
 	err := c.BindJSON(form)
 	if err != nil {
