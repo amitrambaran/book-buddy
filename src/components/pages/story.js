@@ -41,24 +41,24 @@ class Story extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Book Information</h1>
-        <p>Page shows a given book's title, author, rating, desc, where to buy, etc..</p>
-        <br />
         {(!this.state.story) ?
           <h4>Story is loading</h4> :
           <div>
-            <p>Title: {this.state.story.title}</p>
+            <h1>{ this.state.story.title }</h1>
             <p>Author: {this.state.story.author}</p>
             {/* <p>Rating: { this.state.book.rating }</p> */}
-            <p>Content: {this.state.story.content}</p>
+            <div className="main-panel-container">
+              { this.state.story.content }
+            </div>
             <hr></hr>
-            {this.state.story.reviews.map(review => (
-              <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
-            ))}
-            {
-              this.props.user && this.props.user.username !== this.state.story.author &&
-            <AddReview username={this.props.user.username} storyID={this.state.story.id}/>
+            {this.props.user && this.props.user.username !== this.state.story.author &&
+              <AddReview username={this.props.user.username} storyID={this.state.story.id}/>
             }
+            {this.state.story.reviews.map(review => (
+              <div className="main-panel-container">
+                <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
+              </div>
+            ))}
           </div>
         }
       </React.Fragment>
