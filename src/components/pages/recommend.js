@@ -65,7 +65,7 @@ export default class Recommend extends Component {
     return (
       <React.Fragment>
         <h1>User Recommendations</h1>
-        <Form inline style={{justifyContent: 'center'}}>
+        <Form inline style={{justifyContent: 'center'}} onSubmit={this.onGoSubmit}>
           <FormControl
             type="text"
             placeholder="Find recommendations for..."
