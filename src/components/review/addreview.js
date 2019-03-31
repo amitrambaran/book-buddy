@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Form, FormControl } from 'react-bootstrap';
 import apiURL from '../../api';
 
 export default class AddReview extends Component {
@@ -52,17 +53,37 @@ export default class AddReview extends Component {
 
   render() {
     return (
-      <div>
-        <textarea value={this.state.comment} onChange={this.onCommentChange}></textarea>
-        <button disabled={this.state.disabled} onClick={this.sendReview}>Add</button>
-        <select value={this.state.score} onChange={this.onScoreChange}>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </div>
+      <React.Fragment>
+        <Form inline style={{ alignItems: "baseline", display: "flex" }} onSubmit={this.onGoSubmit}>
+          <FormControl
+            as="textarea"
+            rows="2"
+            placeholder="Enter a comment..."
+            value={ this.state.comment }
+            onChange={ this.onCommentChange }
+            style={{ resize: "none", marginRight: "10px" , width: "50%", height: "100px"}}
+          />
+          <div style={{ display: "flex", flexFlow: "wrap" }}>
+            <Button
+              variant="info"
+              disabled={ this.state.disabled }
+              onClick={ this.sendReview }
+              style={{ marginRight: "50%", marginBottom: "6px"}}
+            >Post</Button>
+            <Form.Control
+              as="select"
+              value={ this.state.score }
+              onChange={ this.onScoreChange }
+            >
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </Form.Control>
+          </div>
+        </Form>
+      </React.Fragment>
     )
   }
 }
