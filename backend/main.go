@@ -37,6 +37,7 @@ func init() {
 	if err != nil {
 		fmt.Print(err)
 	}
+	defer db.Close()
 	db.Set("gorm:auto_preload", true)
 	gin.SetMode(gin.ReleaseMode)
 
