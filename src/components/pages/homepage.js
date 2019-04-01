@@ -9,7 +9,7 @@ export class homepage extends Component {
   }
 
   getRandomStories(n) {
-    fetch(`${apiURL}/api/stories/10`, {
+    fetch(`${apiURL}/api/stories/8`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -29,7 +29,7 @@ export class homepage extends Component {
   }
 
   getNewStories(n) {
-    fetch(`${apiURL}/api/newstories/10`, {
+    fetch(`${apiURL}/api/newstories/8`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -44,6 +44,9 @@ export class homepage extends Component {
         }
         return response.json()
       }).then((data) => {
+        data.stories.sort((a,b) => {
+          return b.ID - a.ID 
+        })
         this.setState({ newStories: data.stories })
       })
   }

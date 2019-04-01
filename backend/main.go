@@ -69,7 +69,7 @@ func main() {
 		api.POST("/review/:id", AddReviewHandler)
 	}
 
-	router.Run(":3000")
+	router.Run(":8080")
 }
 
 func getDB() {
@@ -138,11 +138,11 @@ func GetNewStoriesHandler(c *gin.Context) {
 		c.JSON(400, gin.H{"message": "Invalid quantity amount"})
 		return
 	}
-	if n > 10 {
-		n = 10
+	if n > 12 {
+		n = 12
 	}
 	var stories []*models.Story
-	db.Debug().Preload("Reviews").Order("updated_at desc").Limit(n).Find(&stories)
+	db.Debug().Preload("Reviews").Order("created_at asc").Limit(n).Find(&stories)
 	c.JSON(200, gin.H{"stories": stories})
 }
 
@@ -153,8 +153,8 @@ func GetStoriesHandler(c *gin.Context) {
 		c.JSON(400, gin.H{"message": "Invalid quantity amount"})
 		return
 	}
-	if n > 10 {
-		n = 10
+	if n > 12 {
+		n = 12
 	}
 	var stories []*models.Story
 	db.Debug().Preload("Reviews").Order(gorm.Expr("random()")).Limit(n).Find(&stories)
