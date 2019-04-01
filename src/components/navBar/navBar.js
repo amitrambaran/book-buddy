@@ -33,7 +33,7 @@ class NavBar extends Component {
           </div>
           {
             this.props.currentuser ?
-              <Button variant="outline-info" onClick={this.onLogoutClick}>Logout</Button>:
+              <Button variant="outline-info" href="/" onClick={this.onLogoutClick}>Logout</Button>:
               <Nav.Link href="/login" style={{padding: '0'}}>
                 <Button variant="info" style={{ marginLeft: '15px' }} size="md">Login</Button>
               </Nav.Link>

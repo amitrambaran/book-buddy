@@ -84,7 +84,7 @@ class Story extends Component {
               {this.state.story.reviews.map(review => (
                 <div>
                   <hr></hr>
-                  <Review reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
+                  <Review key={review.reviewer} reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
                 </div>
               ))}
             </div>

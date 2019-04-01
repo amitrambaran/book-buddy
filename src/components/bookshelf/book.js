@@ -16,7 +16,7 @@ class Book extends Component {
 
   onPlusClick(e) {
     e.preventDefault();
-    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description}
+    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description, cover: `${this.props.cover}`}
     fetch(`${apiURL}/api/like/${this.props.userID}`, {
       method: 'POST',
       headers: {
@@ -39,8 +39,8 @@ class Book extends Component {
 
   onMinusClick(e) {
     e.preventDefault();
-    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
-    fetch(`${ apiURL }/api/dislike/${ this.props.userID }`, {
+    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description, cover: `${this.props.cover}` }
+    fetch(`${apiURL}/api/dislike/${this.props.userID}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
