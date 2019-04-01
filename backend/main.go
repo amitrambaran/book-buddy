@@ -91,8 +91,8 @@ func AddReviewHandler(c *gin.Context) {
 		c.JSON(400, gin.H{"message": "Invalid story id"})
 		return
 	}
-	form := new(models.ReviewForm)
-	err = c.BindJSON(form)
+	var form models.ReviewForm
+	err = c.BindJSON(&form)
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Invalid review form"})
 		return
