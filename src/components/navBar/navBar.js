@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/index';
 import { Responsive } from 'semantic-ui-react';
@@ -51,15 +50,9 @@ class NavBar extends Component {
                 this.props.currentuser &&
                 <NavDropdown id="basic-nav-dropdown" style={{color: 'white'}}>
                   <Nav className="mr-auto">
-                    <NavDropdown.Item>
-                      <Link href="/library">Library</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link href="/recommend">Recommendations</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link href="/upload">Upload/Publish</Link>
-                    </NavDropdown.Item>
+                    <NavDropdown.Item href="/library">Library</NavDropdown.Item>
+                    <NavDropdown.Item href="/recommend">Recommendations</NavDropdown.Item>
+                    <NavDropdown.Item href="/upload">Upload/Publish</NavDropdown.Item>
                   </Nav>
                 </NavDropdown>
               }
