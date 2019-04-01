@@ -54,13 +54,14 @@ class Library extends Component {
         <div className="break"></div>
 
         <div className="main-panel-container">
-          <header>Your Uploads</header>
+          <header>Your Stories</header>
           <hr></hr>
           <div className="book-container">
-            {this.state && this.state.userStories && this.state.userStories.map(story => (
+            {(this.state && this.state.userStories && this.state.userStories.length &&
+            this.state.userStories.map(story => (
               <StoryItem key={`${story.author}-${story.title}`} story={story} />
-            )
-            )}
+            ))) || <h5>You have no stories</h5>
+          }
           </div>
         </div>
       </React.Fragment>

@@ -84,7 +84,7 @@ export default class Recommend extends Component {
             <div className="main-panel-container book-container">
               {this.state.recommendations.map(book => (
                 <Book
-                  key={book.isbn}
+                  key={`${book.isbn}-${book.title}`}
                   likeable
                   userID={this.props.user.ID}
                   isbn={book.ISBN}

@@ -60,9 +60,7 @@ class LoginPage extends Component {
     })
     .then((data) => {
       if (error) {
-        console.log(data)
         this.setState({error: "Incorrect Username/Password" });
-        console.log(this.state)
       } else {
         data.user.dislikes = (data.user.dislikes) ? data.user.dislikes : [];
         data.user.likes = (data.user.likes) ? data.user.likes : [];

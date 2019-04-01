@@ -50,7 +50,6 @@ class Story extends Component {
   alreadyReviewed(reviews, username){
     let reviewed = false;
     reviews.forEach(review => {
-      console.log(review.reviewer === username)
       if(review.reviewer === username){
         reviewed = true;
       }

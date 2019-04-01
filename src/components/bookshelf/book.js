@@ -53,7 +53,6 @@ class Book extends Component {
           this.props.dislikeBook(bookToAdd)
           break;
         default:
-          console.log('Error')
           return;
       }
     })

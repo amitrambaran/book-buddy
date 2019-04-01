@@ -7,7 +7,7 @@ export default class AddReview extends Component {
     super(props);
     this.state = {
       comment: '',
-      score: 5,
+      score: 4,
       sent: false,
       error: ''
     }
@@ -27,7 +27,6 @@ export default class AddReview extends Component {
 
   sendReview = (e) => {
     e.preventDefault();
-    console.log(this.state.score);
     fetch(`${apiURL}/api/review/${this.props.storyID}`, {
       method: 'POST',
       headers: {
