@@ -7,7 +7,7 @@ export default class AddReview extends Component {
     super(props);
     this.state = {
       comment: '',
-      score: 5,
+      score: 4,
       sent: false,
       error: ''
     }
@@ -17,7 +17,6 @@ export default class AddReview extends Component {
   }
 
   onScoreChange = (e) => {
-    e.preventDefault();
     this.setState({ score: e.target.value })
   }
 
@@ -28,6 +27,7 @@ export default class AddReview extends Component {
 
   sendReview = (e) => {
     e.preventDefault();
+    console.log(this.state.score);
     fetch(`${apiURL}/api/review/${this.props.storyID}`, {
       method: 'POST',
       headers: {
@@ -42,6 +42,7 @@ export default class AddReview extends Component {
     }).then((response) => {
       switch (response.status) {
         case 200:
+          window.location.reload();
           break;
         default:
           this.setState({error: 'Error adding review'})
@@ -70,18 +71,20 @@ export default class AddReview extends Component {
               disabled={ this.state.disabled }
               onClick={ this.sendReview }
               style={{ marginRight: "50%", marginBottom: "6px"}}
-            >Post</Button>
-            <Form.Control
+            >
+              Post
+            </Button>
+            <FormControl
               as="select"
               value={ this.state.score }
               onChange={ this.onScoreChange }
             >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Form.Control>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </FormControl>
           </div>
         </Form>
       </React.Fragment>
