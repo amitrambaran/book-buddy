@@ -7,7 +7,7 @@ export default class AddReview extends Component {
     super(props);
     this.state = {
       comment: '',
-      score: 4,
+      score: 5,
       sent: false,
       error: ''
     }
