@@ -64,24 +64,35 @@ class Story extends Component {
         {(!this.state.story) ?
           <h4>Story is loading</h4> :
           <div>
-            <h2>{this.state.story.title}</h2>
+            <h1>{this.state.story.title}</h1>
+            <br/>
             <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
-              <p>By: <b>{this.state.story.author}</b></p>
+              <h5>By: <b>{this.state.story.author}</b></h5>
               {
-                this.state.story.score !== 0 && <p>Average Rating: { this.state.story.score } / 5</p>
+                this.state.story.score !== 0 && <h5>Average Rating: { this.state.story.score } / 5</h5>
               }
             </div>
-            <p>Content: {this.state.story.content}</p>
+            <br/>
+            <div className="main-panel-container">
+              <header>Content</header>
+              <hr></hr>
+              { this.state.story.content }
+            </div>
             <hr></hr>
-            {this.state.story.reviews.map(review => (
-              <div className="main-panel-container">
-                <Review key={review.reviewer} reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
-              </div>
-            ))}
+            <div className="main-panel-container">
+              <header>User Reviews</header>
+              {this.state.story.reviews.map(review => (
+                <div>
+                  <hr></hr>
+                  <Review key={review.reviewer} reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
+                </div>
+              ))}
+            </div>
+            <br/>
             {
               this.props.user && this.props.user.username !== this.state.story.author &&
               !this.alreadyReviewed(this.state.story.reviews, this.props.user.username) &&
-            <AddReview username={this.props.user.username} storyID={this.state.story.id}/>
+              <AddReview username={this.props.user.username} storyID={this.state.story.id}/>
             }
           </div>
         }

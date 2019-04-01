@@ -74,12 +74,18 @@ a:hover {
 .book-container {
   display: flex;
   flex-flow: wrap;
-  width: 100%;
+  width: 100%; 
 }
 
 .book-panel {
   height: 100%;
   width: 25%;
+  transition: all 200ms;
+}
+
+.book-panel:hover {
+  box-shadow: 0 0 5px rgb(214, 214, 214);
+  transform: scale(1.03);
 }
 
 .book-panel > div {
