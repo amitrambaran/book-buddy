@@ -24,7 +24,7 @@ export class storyItem extends Component {
                 <Card.Text style={{ fontSize: '14px', margin: '0px'}}>
                   Author: { this.props.story.author }
                   <br/><br/>
-                  { this.props.story.content.substring(0, 200) }
+                  { this.props.story.content.substring(0, 200).replace(/[#>_]+/g, '') + '...' }
                 </Card.Text>
               </Card.Body>
             </Card>

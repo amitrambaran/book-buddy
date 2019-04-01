@@ -26,7 +26,7 @@ class NavBar extends Component {
               <Navbar.Brand href="/">Book Buddy</Navbar.Brand>
               {
                 this.props.currentuser &&
-                <Nav className="mr-auto">
+                <Nav className="mr-auto" stlye={{width: '150px'}}>
                   <Nav.Link href="/library">Library</Nav.Link>
                   <Nav.Link href="/recommend">Recommendations</Nav.Link>
                   <Nav.Link href="/upload">Upload/Publish</Nav.Link>

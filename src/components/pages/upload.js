@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import Marked from 'marked';
 import Markmirror from 'react-markmirror';
+import { Button, FormControl} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import apiURL from '../../api';
 
@@ -74,12 +75,23 @@ class Upload extends Component {
       <React.Fragment>
         <h1>Feeling Creative?</h1>
         <h2>Create Your Stories Here</h2>
-        <form id="story">
-          <label>Title</label>
-          <input type="text" id="title" name="title" value={this.state.title} onChange={e => this.handleTitleChange(e)}/>
-          <button type="button" onClick={(e) => this.save(e)} disabled={this.state.saved}>
+        <form id="story" style={{display: 'flex', justifyContent: 'space-evenly', margin: '0.5em'}}>
+          <FormControl
+            placeholder="Title"
+            value={this.state.title}
+            onChange={e => this.handleTitleChange(e)}
+            style={{maxWidth: '20em'}}
+          />
+          <Button
+            type="button"
+            variant={((this.state.length === 0 || this.state.content.length === 0 ) || this.state.saved)
+              ? 'dark': 'primary'
+            }
+            onClick={(e) => this.save(e)}
+            disabled={(this.state.length === 0 || this.state.content.length === 0 ) || this.state.saved}
+          >
             {this.state.saved ? <b>Saved</b> : <b>Create Story</b>}
-          </button>
+          </Button>
         </form>
         <Markmirror form="story" value={this.state.content} onChange={this.handleChange} renderToolbar={this.renderToolbar} onPreview={this.renderPreview}/>
       </React.Fragment>

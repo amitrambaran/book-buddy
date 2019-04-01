@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Review from '../review/review';
 import AddReview from '../review/addreview';
 import apiURL from '../../api';
+import marked from 'marked';
 
 class Story extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Story extends Component {
     reviews.forEach(review => {
       sum += review.score
     });
-    return (sum) ? (sum / reviews.length): sum;
+    return (sum) ? (sum / reviews.length).toFixed(2): sum;
   }
 
   alreadyReviewed(reviews, username){
@@ -55,6 +56,11 @@ class Story extends Component {
       }
     });
     return reviewed;
+  }
+
+  getMarkdownText() {
+    let markUp = marked(this.state.story.content, {sanitize: true});
+    return {__html: markUp};
   }
 
   render() {
@@ -75,15 +81,16 @@ class Story extends Component {
             <div className="main-panel-container">
               <header>Content</header>
               <hr></hr>
-              { this.state.story.content }
+              <div dangerouslySetInnerHTML={this.getMarkdownText()}>
+              </div>
             </div>
             <hr></hr>
             <div className="main-panel-container">
               <header>User Reviews</header>
               {this.state.story.reviews.map(review => (
-                <div>
+                <div key={`${review.reviewer}-${review.comment}`}>
                   <hr></hr>
-                  <Review key={`${review.reviewer}-${review.comment}`} reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
+                  <Review  reviewer={review.reviewer} comment={review.comment} score={review.score}></Review>
                 </div>
               ))}
             </div>
