@@ -86,7 +86,7 @@ class Story extends Component {
             </div>
             <hr></hr>
             <div className="main-panel-container">
-              <header>User Reviews</header>
+              <header>Reviews</header>
               {this.state.story.reviews.map(review => (
                 <div key={`${review.reviewer}-${review.comment}`}>
                   <hr></hr>

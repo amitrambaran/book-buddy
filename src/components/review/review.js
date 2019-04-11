@@ -7,7 +7,7 @@ export default class Review extends Component {
     return (
       <div>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <h6>User: {this.props.reviewer}</h6>
+          <h6>{this.props.reviewer}</h6>
           <Stars score={this.props.score} style={{backgroundColor: '#e6e6e6'}}/>
         </div>
         {this.props.comment}

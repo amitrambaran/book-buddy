@@ -74,6 +74,7 @@ a:hover {
 .book-container {
   display: flex;
   flex-flow: wrap;
+  justify-content: space-evenly;
   width: 100%; 
 }
 

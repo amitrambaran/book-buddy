@@ -44,7 +44,7 @@ class Library extends Component {
           <div className="book-container">
             {(this.props.currentuser && this.props.currentuser.likes.length &&
               this.props.currentuser.likes.map(book => (
-                <Book key={book.ISBN} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} cover={book.cover}/>
+                <Book key={book.ISBN} userID={this.props.currentuser.ID} isbn={book.ISBN} title={book.title} description={book.description} cover={book.cover} link/>
               ))
               ) || <h6>You have no Books</h6>
             }
