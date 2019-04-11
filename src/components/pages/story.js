@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Review from '../review/review';
 import AddReview from '../review/addreview';
+import Stars from '../bookshelf/stars';
 import apiURL from '../../api';
 import marked from 'marked';
 
@@ -74,13 +75,12 @@ class Story extends Component {
             <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
               <h5>By: <b>{this.state.story.author}</b></h5>
               {
-                this.state.story.score !== 0 && <h5>Average Rating: { this.state.story.score } / 5</h5>
+                this.state.story.score !== 0 &&
+                <Stars score={this.state.story.score} style={{fontSize: '1.2em'}} />
               }
             </div>
             <br/>
             <div className="main-panel-container">
-              <header>Content</header>
-              <hr></hr>
               <div dangerouslySetInnerHTML={this.getMarkdownText()}>
               </div>
             </div>

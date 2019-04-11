@@ -186,7 +186,7 @@ func AddStoryHandler(c *gin.Context) {
 		return
 	}
 	var story models.Story
-	db.Debug().Preload("Reviews").Where("title = ? AND author = ?", form.Title, form.Author).FirstOrCreate(&story, &models.Story{Author: form.Author, Title: form.Title, Content: form.Content})
+	db.Debug().Preload("Reviews").Where("title = ? AND author = ?", form.Title, form.Author).FirstOrCreate(&story, &models.Story{Author: form.Author, Title: form.Title, Content: form.Content, Cover: form.Cover})
 	c.JSON(200, gin.H{"story": story})
 }
 

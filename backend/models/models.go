@@ -5,13 +5,14 @@ import "github.com/jinzhu/gorm"
 type ReviewForm struct {
 	Comment  string `json:"comment" binding:"required"`
 	Reviewer string `json:"reviewer" binding:"required"`
-	Score    uint   `json:"score" binding:"required"`
+	Score    uint   `json:"score,string" binding:"required"`
 }
 
 type StoryForm struct {
 	Title   string `json:"title" binding:"required"`
 	Content string `json:"content" binding:"required"`
 	Author  string `json:"author" binding:"required"`
+	Cover   string `json:"cover"`
 }
 
 type BookForm struct {
@@ -45,6 +46,7 @@ type Story struct {
 	Title   string    `json:"title" binding:"required"`
 	Content string    `json:"content" binding:"required"`
 	Author  string    `json:"author" binding:"required"`
+	Cover   string    `json:"cover"`
 	Reviews []*Review `json:"reviews" gorm:"many2many:story_reviews;association_foreignkey:story_id;association_foreignkey:id;"`
 }
 

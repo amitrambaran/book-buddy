@@ -4,12 +4,12 @@ import apiURL from '../../api';
 
 export class homepage extends Component {
   componentWillMount() {
-    this.getRandomStories(10);
-    this.getNewStories(10);
+    this.getRandomStories(8);
+    this.getNewStories(8);
   }
 
   getRandomStories(n) {
-    fetch(`${apiURL}/api/stories/8`, {
+    fetch(`${apiURL}/api/stories/${n}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -29,7 +29,7 @@ export class homepage extends Component {
   }
 
   getNewStories(n) {
-    fetch(`${apiURL}/api/newstories/8`, {
+    fetch(`${apiURL}/api/newstories/${n}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'

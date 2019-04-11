@@ -11,6 +11,7 @@ class Upload extends Component {
     this.state = {
       content: '', 
       title: '',
+      cover: '',
       saved: false
     };
   }
@@ -27,7 +28,8 @@ class Upload extends Component {
       body: JSON.stringify({
         author: this.props.author.username,
         title: this.state.title,
-        content: this.state.content
+        content: this.state.content,
+        cover: this.state.cover
       })
     }).then((response) => {
       switch (response.status) {
@@ -51,6 +53,10 @@ class Upload extends Component {
 
   handleTitleChange = (e) => {
     this.setState({title: e.target.value});
+  }
+
+  handleCoverChange = (e) => {
+    this.setState({cover: e.target.value});
   }
 
   renderPreview = (markdown) => {
@@ -80,6 +86,12 @@ class Upload extends Component {
             placeholder="Title"
             value={this.state.title}
             onChange={e => this.handleTitleChange(e)}
+            style={{maxWidth: '20em'}}
+          />
+          <FormControl
+            placeholder="(Optional) Link to cover image"
+            value={this.state.cover}
+            onChange={e => this.handleCoverChange(e)}
             style={{maxWidth: '20em'}}
           />
           <Button
