@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { likeBook, dislikeBook } from '../../actions/index';
+import apiURL from '../../api'
 
 class Book extends Component {
   constructor(props) {
@@ -15,10 +17,13 @@ class Book extends Component {
 
   onPlusClick(e) {
     e.preventDefault();
-    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
-    fetch(`http://localhost:8080/api/like/${this.props.userID}`, {
+    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description, cover: `${this.props.cover}` }
+    fetch(`${apiURL}/api/like/${this.props.userID}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(bookToAdd)
     }).then((response) => {
       switch (response.status) {
@@ -35,10 +40,13 @@ class Book extends Component {
 
   onMinusClick(e) {
     e.preventDefault();
-    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description }
-    fetch(`http://localhost:8080/api/dislike/${this.props.userID}`, {
+    let bookToAdd = { ISBN: this.props.isbn, title: this.props.title, description: this.props.description, cover: `${this.props.cover}` }
+    fetch(`${apiURL}/api/dislike/${this.props.userID}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(bookToAdd)
     }).then((response) => {
       switch (response.status) {
@@ -46,40 +54,61 @@ class Book extends Component {
           this.props.dislikeBook(bookToAdd)
           break;
         default:
-          console.log('Error')
           return;
       }
     })
     this.setState({ disabled: true })
   }
-
-
-  render() {
-
+  bookBody = () => {
     return (
-      <Card style={{ maxWidth: '20em' }}>
-        <Card.Img src={`http://covers.openlibrary.org/b/isbn/${this.props.isbn}-L.jpg`} />
-        {this.props.likeable && 
+      <Card>
+        <Card.Img src={`https://covers.openlibrary.org/b/id/${this.props.cover}-L.jpg`} />
+        {this.props.likeable &&
           <div>
             <Button
-              style={{ position: 'absolute', top: '10px', right: '10px', background: 'green' }}
+              variant="success"
+              style={{ position: 'absolute', top: '10px', left: '10px' }}
               onClick={this.onPlusClick}
               disabled={this.state.disabled}
             >+</Button>
             <Button
-              style={{ position: 'absolute', top: '10px', left: '10px', background: 'red' }}
+              variant="danger"
+              style={{ position: 'absolute', top: '10px', right: '10px' }}
               onClick={this.onMinusClick}
               disabled={this.state.disabled}
             >-</Button>
           </div>
         }
-        <Card.Body  >
+        <Card.Body>
           <Card.Title>{this.props.title}</Card.Title>
-          <Card.Text style={{ fontSize: '0.8em' }}>
-            {this.props.description}
+          <Card.Text style={{ fontSize: '14px', margin: '0px' }}>
+            {this.props.description.substring(0, 200)}
           </Card.Text>
         </Card.Body>
       </Card>
+
+    )
+  }
+
+  render() {
+
+
+    return (
+      <div className="book-panel">
+        {
+          this.props.link ? 
+          <Link
+            to={ "/recommend/" + this.props.title.replace(/\s+/g, '_') }
+            onClick={ this.forceUpdate }
+          >
+            {this.bookBody()}
+          </Link> 
+          :
+          <div>
+            {this.bookBody()}
+          </div>
+        }
+      </div>
     )
   }
 }
@@ -90,4 +119,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(null, mapDispatchToProps)(Book);
-

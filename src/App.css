@@ -7,19 +7,20 @@
 
 /* Take up entire screen */
 html, body, .App, #root {
-  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  
+  height: auto;
+  background-color: #e6e6e6;
   font-size: 20px;
 }
 
 .App {
   text-align: center;
-  background-color: rgb(230, 230, 230);
+  
 }
 
 a {
@@ -55,6 +56,7 @@ a:hover {
   background-color: white;
   width: 100%;
   padding: 15px;
+  padding-bottom: 20px;
 }
 
 .main-panel-container header {
@@ -67,4 +69,47 @@ a:hover {
   height: 2px;
   margin: 10px 0px;
   background-image: linear-gradient(to right, rgba(200, 200, 200, 0.75), rgba(200, 200, 200, 0.3), rgba(200, 200, 200, 0));
+}
+
+.book-container {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-evenly;
+  width: 100%; 
+}
+
+.book-panel {
+  height: 100%;
+  width: 25%;
+  transition: all 200ms;
+}
+
+.book-panel:hover {
+  box-shadow: 0 0 5px rgb(214, 214, 214);
+  transform: scale(1.03);
+}
+
+.book-panel > div {
+  margin: 10px;
+}
+
+@media all and (max-width: 1199px) {
+  .book-panel {
+    width: 25%;
+  }
+}
+@media all and (max-width: 991px) {
+  .book-panel {
+    width: 33%;
+  }
+}
+@media all and (max-width: 768px) {
+  .book-panel {
+    width: 50%;
+  }
+}
+@media all and (max-width: 480px) {
+  .book-panel {
+    width: 100%;
+  }
 }

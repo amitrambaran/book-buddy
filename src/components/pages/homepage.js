@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
-import StoryItem from  '../bookshelf/storyItem';
+import StoryItem from '../bookshelf/storyItem';
+import apiURL from '../../api';
 
 export class homepage extends Component {
-  componentWillMount(){
-    this.getRandomStories(10);
-    this.getNewStories(10);
+  componentWillMount() {
+    this.getRandomStories(8);
+    this.getNewStories(8);
   }
 
-  getRandomStories(n){
-    fetch('http://localhost:8080/api/stories/10')
+  getRandomStories(n) {
+    fetch(`${apiURL}/api/stories/${n}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
       .then((response) => {
         switch (response.status) {
           case 200:
@@ -18,12 +24,17 @@ export class homepage extends Component {
         }
         return response.json()
       }).then((data) => {
-        this.setState({randStories: data.stories})
+        this.setState({ randStories: data.stories })
       })
   }
 
-  getNewStories(n){
-    fetch('http://localhost:8080/api/newstories/10')
+  getNewStories(n) {
+    fetch(`${apiURL}/api/newstories/${n}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
       .then((response) => {
         switch (response.status) {
           case 200:
@@ -33,42 +44,45 @@ export class homepage extends Component {
         }
         return response.json()
       }).then((data) => {
-        this.setState({newStories: data.stories})
+        data.stories.sort((a,b) => {
+          return b.ID - a.ID 
+        })
+        this.setState({ newStories: data.stories })
       })
   }
 
   render() {
     return (
-        <React.Fragment>
-            <h1>Homepage</h1>
+      <React.Fragment>
+        <h1>Homepage</h1>
 
-            <div className="break"></div>
+        <div className="break"></div>
 
             <div className="main-panel-container">
               <header>New Stories</header>
               <hr></hr>
-              <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+              <div className="book-container">
                 {this.state && this.state.newStories && this.state.newStories.map(story => (
-                  <StoryItem story={story}/>
+                  <StoryItem key={`new-${story.author}-${story.title}`} story={story}/>
                 )
                 )}
               </div>
             </div>
 
-            <div className="break"></div>
+        <div className="break"></div>
 
             <div className="main-panel-container">
               <header>Random Stories</header>
               <hr></hr>
-              <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+              <div className="book-container">
                 {this.state && this.state.randStories && this.state.randStories.map(story => (
-                  <StoryItem story={story}/>
+                  <StoryItem key={`random-${story.author}-${story.title}`} story={story}/>
                 )
                 )}
               </div>
             </div>
 
-        </React.Fragment>
+      </React.Fragment>
     )
   }
 }
